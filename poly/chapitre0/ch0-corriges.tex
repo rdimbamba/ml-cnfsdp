@@ -1,0 +1,81 @@
+\section{Corrigés des exercices}
+\label{sec:corriges}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:produit}.}
+$A\T A=\begin{pmatrix}1&1&1\\0&1&2\end{pmatrix}\begin{pmatrix}1&0\\1&1\\1&2\end{pmatrix}=\begin{pmatrix}3&3\\3&5\end{pmatrix}$.
+Son déterminant vaut $3\times5-3\times3=6\ne0$, donc $(A\T A)^{-1}=\frac16\begin{pmatrix}5&-3\\-3&3\end{pmatrix}$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:covariance}.}
+Moyennes : $4$ personnes et $2$ pièces. Écarts : $(-2,0,0,2)$ et $(-1,0,1,0)$.
+$S_{11}=\frac{4+0+0+4}{4}=2$, $S_{22}=\frac{1+0+1+0}{4}=0{,}5$, $S_{12}=\frac{2+0+0+0}{4}=0{,}5$, donc
+$S=\begin{pmatrix}2&0{,}5\\0{,}5&0{,}5\end{pmatrix}$ et la corrélation vaut $\frac{0{,}5}{\sqrt{2\times0{,}5}}=0{,}5$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:spectre}.}
+$B\begin{pmatrix}1\\1\end{pmatrix}=\begin{pmatrix}8\\8\end{pmatrix}=8\begin{pmatrix}1\\1\end{pmatrix}$ et $B\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}2\\-2\end{pmatrix}=2\begin{pmatrix}1\\-1\end{pmatrix}$ : valeurs propres $8$ et $2$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:constante}.}
+La somme des écarts au carré est minimale pour la moyenne, $\frac{80+100+120+150+550}{5}=200$ ; la somme des écarts absolus pour la médiane, $120$.
+Le revenu $550$ tire la moyenne vers le haut : quatre ménages sur cinq gagnent moins que la moyenne. La médiane résiste aux valeurs extrêmes.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:droite}.}
+$\bar x=1{,}5$, $\bar y=4$ ; écarts $(-1{,}5;-0{,}5;0{,}5;1{,}5)$ et $(-3,-1,0,4)$.
+$s_{xy}=\frac{4{,}5+0{,}5+0+6}{4}=2{,}75$ et $s_x^2=\frac{2{,}25+0{,}25+0{,}25+2{,}25}{4}=1{,}25$, d'où $\hat b=2{,}2$ et $\hat a=4-2{,}2\times1{,}5=0{,}7$ : la droite est $y=0{,}7+2{,}2\,x$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:gd}.}
+$L'(\theta)=4\theta$, donc $\theta_{k+1}=\theta_k-4\eta\theta_k=(1-4\eta)\theta_k$ et $\theta_k=(1-4\eta)^k\theta_0$.
+La descente converge vers $0$ si et seulement si $|1-4\eta|<1$, c'est-à-dire $0<\eta<\frac12$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:bernoulli}.}
+$\E[X]=1\times p+0\times(1-p)=p$ et $\E[X^2]=p$ (car $X^2=X$), donc $\Var(X)=p-p^2=p(1-p)$, maximale pour $p=\frac12$ où elle vaut $\frac14$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:sondage}.}
+Il faut $1{,}96\sqrt{p(1-p)/n}\le0{,}03$. Comme $p(1-p)\le\frac14$, il suffit que $1{,}96\times\frac{1}{2\sqrt n}\le0{,}03$, soit $n\ge\big(\frac{1{,}96}{0{,}06}\big)^2\approx1\,067{,}1$ : $n=1\,068$ ménages.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:meilleureconstante}.}
+$\E[Z]=3{,}5$ et $\Var(Z)=\frac{35}{12}\approx2{,}917$.
+Pour $c=3$ : $\E[(Z-3)^2]=\frac{4+1+0+1+4+9}{6}=\frac{19}{6}\approx3{,}167=\frac{35}{12}+(3{,}5-3)^2$.
+Pour $c=3{,}5$ : on obtient $\Var(Z)$, la valeur minimale.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:prevalence}.}
+$\P(+)=0{,}95\times0{,}10+0{,}10\times0{,}90=0{,}185$ et $\P(M\mid+)=\frac{0{,}095}{0{,}185}\approx0{,}51$.
+Avec le même test, un résultat positif passe de $9\,\%$ à $51\,\%$ de chances d'être un vrai malade : la prévalence compte autant que la qualité du test.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:tableau}.}
+$\P(X=0)=0{,}4$ et $\P(X=1)=0{,}6$.
+$\E[Y\mid X=0]=\frac{0\times0{,}2+1\times0{,}1+2\times0{,}1}{0{,}4}=0{,}75$ et $\E[Y\mid X=1]=\frac{0\times0{,}1+1\times0{,}2+2\times0{,}3}{0{,}6}=\frac43$.
+Espérance totale : $0{,}4\times0{,}75+0{,}6\times\frac43=1{,}1$, et directement $\E[Y]=1\times0{,}3+2\times0{,}4=1{,}1$.
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:shrinkage}.}
+Biais : $c\mu-\mu=(c-1)\mu$ ; variance : $c^2\sigma^2/n$. Par la proposition~\ref{prop:biaisvariance},
+$\mathrm{EQM}(c)=(1-c)^2\mu^2+c^2\frac{\sigma^2}{n}$, dont la dérivée $-2(1-c)\mu^2+2c\frac{\sigma^2}{n}$ s'annule en $c^*=\frac{\mu^2}{\mu^2+\sigma^2/n}<1$ (minimum, car la dérivée seconde est positive).
+Accepter un peu de biais réduit davantage la variance : c'est l'idée de la régression ridge (chapitre~2).
+Mais $c^*$ dépend de $\mu$ et $\sigma$, inconnus : en pratique, on règle ce type de paramètre sur les données, par validation croisée (chapitre~1).
+\end{corrige}
+
+\begin{corrige}
+\textbf{Exercice~\ref{ex:ic}.}
+$\hat p=\frac{45}{300}=0{,}15$ et $1{,}96\sqrt{\frac{0{,}15\times0{,}85}{300}}\approx0{,}040$ : le taux d'erreur est compris entre $11\,\%$ et $19\,\%$ avec une confiance d'environ $95\,\%$.
+\end{corrige}

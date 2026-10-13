@@ -1,0 +1,296 @@
+% =====================================================================
+%  beamerthemeCNFSDP.sty
+%  Thème beamer sobre aux couleurs du CNFSDP (Brazzaville)
+%  Cours : Introduction au Machine Learning -- L3, S5, 2026-2027
+%  Enseignant : Rois Céti DIMBAMBA
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeCNFSDP}[2026/10/11 Theme CNFSDP]
+
+% ---------------------------------------------------------------------
+%  Paquets
+% ---------------------------------------------------------------------
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[french]{babel}
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{booktabs}
+\RequirePackage{tikz}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{listings}
+\RequirePackage{csquotes}
+
+\usefonttheme[onlymath]{serif}   % mathématiques en police à empattements
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=8mm, text margin right=8mm}
+
+% ---------------------------------------------------------------------
+%  Couleurs (relevées sur le logo officiel)
+% ---------------------------------------------------------------------
+\definecolor{cnfVert}{HTML}{126B2A}       % vert foncé (couleur principale)
+\definecolor{cnfVertVif}{HTML}{00A04A}    % vert du logo
+\definecolor{cnfJaune}{HTML}{F2E600}      % jaune du logo
+\definecolor{cnfRouge}{HTML}{D7191F}      % rouge du logo
+\definecolor{cnfTexte}{HTML}{1E1E1E}
+\definecolor{cnfGris}{HTML}{6B6B6B}
+\definecolor{cnfGrisClair}{HTML}{F3F4F2}
+\definecolor{cnfVertPale}{HTML}{EEF6F0}
+\definecolor{cnfJaunePale}{HTML}{FFFBE0}
+\definecolor{cnfRougePale}{HTML}{FCEDED}
+
+\setbeamercolor{normal text}{fg=cnfTexte,bg=white}
+\setbeamercolor{structure}{fg=cnfVert}
+\setbeamercolor{alerted text}{fg=cnfRouge}
+\setbeamercolor{example text}{fg=cnfVert}
+\setbeamercolor{frametitle}{fg=cnfVert,bg=white}
+\setbeamercolor{title}{fg=cnfVert}
+\setbeamercolor{subtitle}{fg=cnfTexte}
+\setbeamercolor{footline}{fg=cnfGris}
+\setbeamercolor{item}{fg=cnfVert}
+\setbeamercolor{subitem}{fg=cnfVertVif}
+\setbeamercolor{section in toc}{fg=cnfTexte}
+\setbeamercolor{block title}{fg=white,bg=cnfVert}
+\setbeamercolor{block body}{bg=cnfVertPale}
+
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{footline}{size=\tiny}
+\setbeamertemplate{itemize item}{\raisebox{0.15ex}{\tiny$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.2ex}{\tiny$\blacktriangleright$}}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}[sections numbered]
+
+% ---------------------------------------------------------------------
+%  Informations du cours (modifiables dans chaque chapitre)
+% ---------------------------------------------------------------------
+\newcommand{\cnfCours}{Introduction au Machine Learning}
+\newcommand{\cnfNiveau}{Licence 3 \textperiodcentered{} Semestre 5 \textperiodcentered{} UE Informatique IV}
+\newcommand{\cnfAnnee}{Année académique 2026-2027}
+\newcommand{\cnfEcole}{Centre National de Formation en Statistique,\\Démographie et Planification}
+\newcommand{\cnfVille}{Brazzaville, République du Congo}
+\newcommand{\cnfDepot}{github.com/rdimbamba/ml-cnfsdp}
+\def\cnfChapitreCourt{}
+\newcommand{\chapitrecourt}[1]{\def\cnfChapitreCourt{#1}}
+\newcommand{\depot}[1]{\renewcommand{\cnfDepot}{#1}}
+
+% Numéro de chapitre : préfixe des numéros de définitions/théorèmes
+\newcounter{cnfchapitre}
+\newcommand{\chapitre}[1]{\setcounter{cnfchapitre}{#1}}
+
+% Bande tricolore (vert, jaune, rouge) -- signature visuelle discrète
+\newcommand{\cnfBande}[2]{%
+  \begin{tikzpicture}
+    \fill[cnfVertVif] (0,0) rectangle ({#1/3},#2);
+    \fill[cnfJaune]   ({#1/3},0) rectangle ({2*#1/3},#2);
+    \fill[cnfRouge]   ({2*#1/3},0) rectangle (#1,#2);
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Titre de diapositive : titre vert + filet tricolore court
+% ---------------------------------------------------------------------
+\setbeamertemplate{frametitle}{%
+  \vskip2.5mm
+  \hspace*{0mm}%
+  \begin{minipage}{\dimexpr\paperwidth-16mm\relax}
+    {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par}%
+    \ifx\insertframesubtitle\@empty\else
+      {\small\color{cnfGris}\insertframesubtitle\par}%
+    \fi
+    \nointerlineskip\vskip1.2mm
+    \cnfBande{1.8cm}{0.6mm}%
+  \end{minipage}%
+  \vskip0.5mm
+}
+
+% ---------------------------------------------------------------------
+%  Pied de page : emblème | cours -- chapitre | numéro
+% ---------------------------------------------------------------------
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[cnfGrisClair!70!cnfGris,line width=0.3pt]
+      ([xshift=8mm,yshift=7.5mm]current page.south west) --
+      ([xshift=-8mm,yshift=7.5mm]current page.south east);
+    \node[anchor=west,inner sep=0] at ([xshift=8mm,yshift=3.8mm]current page.south west)
+      {\includegraphics[height=5.2mm]{logo_cnfsdp_embleme.png}};
+    \node[anchor=west,inner sep=0,font=\usebeamerfont{footline}\color{cnfGris}]
+      at ([xshift=15.5mm,yshift=3.8mm]current page.south west)
+      {CNFSDP \textendash{} \cnfCours\ifx\cnfChapitreCourt\@empty\else{} \textperiodcentered{} \cnfChapitreCourt\fi};
+    \node[anchor=east,inner sep=0,font=\usebeamerfont{footline}\bfseries\color{cnfVert}]
+      at ([xshift=-8mm,yshift=3.8mm]current page.south east)
+      {\insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}%
+  \vskip8.5mm
+}
+
+% ---------------------------------------------------------------------
+%  Page de titre
+% ---------------------------------------------------------------------
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % logo officiel en haut à gauche
+    \node[anchor=north west,inner sep=0] at ([xshift=8mm,yshift=-7mm]current page.north west)
+      {\includegraphics[height=13mm]{logo_cnfsdp.png}};
+    % école en haut à droite
+    \node[anchor=north east,align=right,inner sep=0,font=\scriptsize\color{cnfGris}]
+      at ([xshift=-8mm,yshift=-8mm]current page.north east)
+      {\cnfEcole\\[0.3ex]\cnfVille};
+    % bande tricolore en bas de page
+    \node[anchor=south west,inner sep=0] at (current page.south west)
+      {\cnfBande{\paperwidth}{1.6mm}};
+  \end{tikzpicture}
+  \vskip16mm
+  {\usebeamerfont{subtitle}\color{cnfGris}\cnfCours\par}
+  \vskip1.5mm
+  {\usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle\par}
+  \ifx\insertsubtitle\@empty\else
+    \vskip1.5mm{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+  \fi
+  \vskip2mm
+  \cnfBande{2.4cm}{0.8mm}
+  \vskip5mm
+  {\normalsize\bfseries\insertauthor\par}
+  \vskip0.8mm
+  {\footnotesize\color{cnfGris}\insertinstitute\par}
+  \vskip4mm
+  {\footnotesize\cnfNiveau\par}
+  {\footnotesize\color{cnfGris}\cnfAnnee\ \textperiodcentered\ \insertdate\par}
+}
+
+% Diapositive de section : numéro et titre, sobre
+\AtBeginSection[]{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \hspace*{2mm}%
+    \begin{minipage}{0.85\textwidth}\raggedright
+      {\fontsize{34}{36}\selectfont\bfseries\color{cnfVert!30}\thesection\par}
+      \vskip2mm
+      {\LARGE\bfseries\color{cnfVert}\insertsectionhead\par}
+      \nointerlineskip\vskip3mm
+      \cnfBande{2.4cm}{0.8mm}
+    \end{minipage}
+    \vfill
+  \end{frame}}
+
+% ---------------------------------------------------------------------
+%  Environnements mathématiques (tcolorbox)
+%  Numérotation : <chapitre>.<n>, un seul compteur partagé
+% ---------------------------------------------------------------------
+\newcounter{cnfenonce}
+\renewcommand{\thecnfenonce}{\arabic{cnfchapitre}.\arabic{cnfenonce}}
+
+\tcbset{
+  cnfbase/.style={enhanced,breakable=false,boxrule=0pt,arc=0.6mm,
+    left=2.2mm,right=2.2mm,top=1.2mm,bottom=1.2mm,
+    fonttitle=\bfseries\small,fontupper=\small,
+    before skip=1.1mm,after skip=1.1mm},
+}
+
+% Définition : bande verte à gauche, fond vert pâle
+% (beamer définit déjà « definition » : on le libère)
+\let\definition\relax\let\enddefinition\relax
+\newtcolorbox{definition}[1][]{cnfbase,
+  colback=cnfVertPale,colframe=cnfVert,
+  borderline west={1.2mm}{0pt}{cnfVert},
+  coltitle=cnfVert,colbacktitle=cnfVertPale,
+  attach title to upper={\ \ },
+  title={\stepcounter{cnfenonce}Définition~\thecnfenonce\if\relax\detokenize{#1}\relax\else{} (#1)\fi.}}
+
+% Théorème, proposition, lemme, corollaire : cadre vert, titre plein
+\newcommand{\cnfEnonceFort}[2]{%
+  \newtcolorbox{#1}[1][]{cnfbase,
+    colback=white,colframe=cnfVert,boxrule=0.5pt,
+    colbacktitle=cnfVert,coltitle=white,
+    title={\stepcounter{cnfenonce}#2~\thecnfenonce\if\relax\detokenize{##1}\relax\else{} (##1)\fi}}}
+\cnfEnonceFort{theoreme}{Théorème}
+\cnfEnonceFort{proposition}{Proposition}
+\cnfEnonceFort{lemme}{Lemme}
+\cnfEnonceFort{corollaire}{Corollaire}
+
+% Hypothèse : comme une définition, mais repère rouge
+\newtcolorbox{hypothese}[1][]{cnfbase,
+  colback=cnfRougePale,colframe=cnfRouge,
+  borderline west={1.2mm}{0pt}{cnfRouge},
+  coltitle=cnfRouge,colbacktitle=cnfRougePale,
+  attach title to upper={\ \ },
+  title={\stepcounter{cnfenonce}Hypothèse~\thecnfenonce\if\relax\detokenize{#1}\relax\else{} (#1)\fi.}}
+
+% Preuve : filet gris, se termine par un carré
+\newtcolorbox{preuve}[1][]{cnfbase,
+  colback=white,colframe=white,
+  borderline west={0.6mm}{0pt}{cnfGris},
+  left=3mm,
+  fontupper=\small,
+  before upper={{\itshape\color{cnfGris}Preuve\if\relax\detokenize{#1}\relax\else{} #1\fi.}\ },
+  after upper={\hfill$\square$}}
+
+% Remarque et exemple : repère jaune, fond jaune pâle
+\newtcolorbox{remarque}[1][Remarque]{cnfbase,
+  colback=cnfJaunePale,colframe=cnfJaune,
+  borderline west={1.2mm}{0pt}{cnfJaune!85!black},
+  attach title to upper={\ \ },coltitle=cnfTexte,colbacktitle=cnfJaunePale,
+  title={#1.}}
+\newenvironment{exemple}{\begin{remarque}[Exemple]}{\end{remarque}}
+
+% Encadré « objectifs » et « à retenir »
+\newtcolorbox{objectifs}{cnfbase,colback=cnfGrisClair,colframe=cnfGrisClair,
+  title={Objectifs de la séance},coltitle=cnfVert,colbacktitle=cnfGrisClair,
+  fontupper=\small}
+\newtcolorbox{aretenir}{cnfbase,colback=cnfVertPale,colframe=cnfVert,boxrule=0.5pt,
+  title={À retenir},coltitle=white,colbacktitle=cnfVert}
+
+% Encadré TP en salle : titre rouge
+\newtcolorbox{tp}[2]{cnfbase,colback=white,colframe=cnfRouge,boxrule=0.5pt,
+  colbacktitle=cnfRouge,coltitle=white,
+  title={#1 \hfill {\normalfont\footnotesize #2}}}
+
+% ---------------------------------------------------------------------
+%  Code Python (listings)
+% ---------------------------------------------------------------------
+\lstdefinestyle{cnfpython}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{cnfVert}\bfseries,
+  stringstyle=\color{cnfRouge!85!black},
+  commentstyle=\color{cnfGris}\itshape,
+  numberstyle=\tiny\color{cnfGris},
+  numbers=left,numbersep=6pt,xleftmargin=10pt,
+  backgroundcolor=\color{cnfGrisClair},
+  frame=none,
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,keepspaces=true,
+  morekeywords={as,with,None,True,False},
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ù}{{\`u}}1 {ç}{{\c{c}}}1
+           {ê}{{\^e}}1 {â}{{\^a}}1 {ô}{{\^o}}1 {î}{{\^i}}1 {É}{{\'E}}1
+           {σ}{{$\sigma$}}1 {θ}{{$\theta$}}1 {±}{{$\pm$}}1 {≈}{{$\approx$}}1 {≤}{{$\le$}}1 {λ}{{$\lambda$}}1 {²}{{$^2$}}1 {«}{{\guillemotleft}}1 {»}{{\guillemotright}}1
+}
+\lstnewenvironment{python}[1][]{\lstset{style=cnfpython,#1}}{}
+
+% ---------------------------------------------------------------------
+%  Macros mathématiques usuelles
+% ---------------------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Dn}{\mathcal{D}_n}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\Rn}{\widehat{R}_n}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\ps}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\cond}{\,\middle|\,}
+\newcommand{\T}{^{\top}}
+\newcommand{\iid}{\overset{\text{i.i.d.}}{\sim}}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rg}{rg}
+
+\endinput

@@ -1,0 +1,32 @@
+# --- Données d'enquête : JAMAIS sur le dépôt (conditions d'utilisation DHS) ---
+donnees/
+*.DTA
+*.dta
+*.SAV
+*.sav
+*.zip
+
+# --- Python et Jupyter ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+.env
+
+# --- LaTeX (fichiers intermédiaires) ---
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+build.log
+png/
+
+# --- Systèmes ---
+.DS_Store
+Thumbs.db

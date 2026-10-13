@@ -1,0 +1,64 @@
+\section{TP0 \textendash{} Installation et premiers pas}
+\label{sec:tp0}
+
+\begin{tp}{TP0 \textendash{} à faire chez soi avant le chapitre 1}{environ 1 h 30 \textperiodcentered{} \texttt{\cnfDepot}}
+Objectif : arriver au premier cours avec un environnement Python fonctionnel, le dépôt du cours sur sa machine, et le notebook \texttt{TP0.ipynb} exécuté.
+En cas de blocage, Google Colab permet de faire tous les TP dans un navigateur, sans rien installer (étape~6).
+\end{tp}
+
+\subsection*{Étape 1 \textendash{} Python avec Miniconda}
+Télécharger l'installateur Miniconda pour votre système depuis le site officiel d'Anaconda (\url{https://www.anaconda.com/docs/getting-started/miniconda/install}) et l'installer avec les options par défaut.
+Sous Windows, ouvrir ensuite le programme \emph{Anaconda Prompt} ; sous macOS ou Linux, un terminal. Vérifier :
+\begin{terminal}
+conda --version
+\end{terminal}
+
+\subsection*{Étape 2 \textendash{} Environnement du cours}
+Créer un environnement isolé contenant les bibliothèques du cours, puis l'activer :
+\begin{terminal}
+conda create -n ml-cnfsdp -c conda-forge python=3.12 numpy pandas matplotlib scikit-learn jupyter ipykernel pyreadstat
+conda activate ml-cnfsdp
+python -c "import numpy, sklearn; print(numpy.__version__, sklearn.__version__)"
+\end{terminal}
+La bibliothèque \texttt{pyreadstat} servira à lire les fichiers SPSS des enquêtes DHS au chapitre~5.
+
+\subsection*{Étape 3 \textendash{} VS Code}
+Installer Visual Studio Code (\url{https://code.visualstudio.com}), puis, dans l'onglet \emph{Extensions}, les extensions \emph{Python} et \emph{Jupyter} publiées par Microsoft.
+Dans VS Code, \texttt{Ctrl+Maj+P}, puis \emph{Python: Select Interpreter}, et choisir l'environnement \texttt{ml-cnfsdp}.
+
+\subsection*{Étape 4 \textendash{} Git et Git Bash}
+Installer Git (\url{https://git-scm.com}) ; sous Windows, l'installation fournit le terminal \emph{Git Bash}. Puis, une seule fois :
+\begin{terminal}
+git config --global user.name "Prénom Nom"
+git config --global user.email "adresse@exemple.com"
+\end{terminal}
+
+\subsection*{Étape 5 \textendash{} GitHub et dépôt du cours}
+Créer un compte gratuit sur \url{https://github.com}. Dans Git Bash, cloner le dépôt du cours et l'ouvrir dans VS Code :
+\begin{terminal}
+git clone https://github.com/rdimbamba/ml-cnfsdp.git
+cd ml-cnfsdp
+code .
+\end{terminal}
+Pour récupérer les nouveaux supports au fil du semestre : \texttt{git pull} depuis ce dossier.
+
+\subsection*{Étape 6 \textendash{} Exécuter le notebook}
+Ouvrir \texttt{notebooks/TP0.ipynb} dans VS Code et exécuter toutes les cellules (\emph{Run All}).
+Sans installation locale : ouvrir \url{https://colab.research.google.com}, onglet \emph{GitHub}, saisir \texttt{rdimbamba/ml-cnfsdp}, puis choisir \texttt{TP0.ipynb} ; ou cliquer sur le bouton \emph{Open in Colab} de la page du cours.
+
+\subsection*{Liste de vérification}
+\begin{itemize}[label=$\square$]
+  \item \texttt{conda activate ml-cnfsdp} fonctionne et \texttt{import sklearn} ne renvoie pas d'erreur.
+  \item VS Code exécute une cellule de notebook avec l'environnement \texttt{ml-cnfsdp}.
+  \item \texttt{git -{}-version} répond, et le dossier \texttt{ml-cnfsdp} est cloné.
+  \item Les quatre programmes de la section~\ref{sec:python} donnent les mêmes sorties.
+\end{itemize}
+
+\subsection*{Exercices du TP0}
+Ils sont posés dans le notebook ; chacun vérifie numériquement un résultat du chapitre.
+\begin{enumerate}
+  \item \emph{Matrices.} Calculer avec NumPy $A\T A$ et son inverse pour la matrice de l'exercice~\ref{ex:produit}, et comparer avec votre calcul à la main.
+  \item \emph{Bayes par simulation.} Simuler un million de personnes avec la prévalence et le test de l'exemple de la section~\ref{sec:conditionnement}, et estimer $\P(M\mid+)$.
+  \item \emph{Choix du pas.} Pour $L(\theta)=2\theta^2$, lancer $50$ pas de descente de gradient depuis $\theta_0=1$ avec $\eta=0{,}4$, puis $\eta=0{,}6$ ; comparer avec l'exercice~\ref{ex:gd}.
+  \item \emph{Un biais qui paie.} Pour $\mu=1$, $\sigma=3$, $n=10$, estimer par simulation l'erreur quadratique de $c\,\bar X_n$ pour $c\in[0{,}5;1{,}2]$ et comparer le minimum à la valeur $c^*$ de l'exercice~\ref{ex:shrinkage}.
+\end{enumerate}

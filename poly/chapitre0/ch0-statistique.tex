@@ -1,0 +1,70 @@
+\section{Estimation}
+\label{sec:statistique}
+
+Un modèle de machine learning est fabriqué à partir d'un échantillon : il en hérite les erreurs d'estimation. Le vocabulaire de cette section (biais, variance) sert dès le chapitre~1.
+
+\subsection{Biais, variance, erreur quadratique}
+
+\begin{definition}[Estimateur, biais, erreur quadratique moyenne]
+On cherche une quantité inconnue $\theta$ (une moyenne, une proportion\dots). Un \emph{estimateur} $\hat\theta$ est une formule calculée sur l'échantillon ; il est aléatoire, puisque l'échantillon l'est.
+Son \emph{biais} est $\E[\hat\theta]-\theta$ (l'erreur systématique), et son \emph{erreur quadratique moyenne} est $\mathrm{EQM}(\hat\theta)=\E\big[(\hat\theta-\theta)^2\big]$.
+\end{definition}
+
+\begin{proposition}[Décomposition biais-variance]
+\label{prop:biaisvariance}
+$\mathrm{EQM}(\hat\theta)=\big(\E[\hat\theta]-\theta\big)^2+\Var(\hat\theta)$.
+\end{proposition}
+\begin{preuve}
+C'est la proposition~\ref{prop:meilleureconstante} appliquée à $Z=\hat\theta$ et $c=\theta$.
+\end{preuve}
+
+\begin{remarque}[Lecture]
+Une erreur vient soit d'un tir mal centré (biais), soit d'un tir dispersé (variance). Au chapitre~1, le même découpage explique le sur-apprentissage : un modèle trop simple est biaisé, un modèle trop complexe a une forte variance.
+\end{remarque}
+
+\begin{exemple}[Moyenne empirique]
+D'après la proposition~\ref{prop:moyennevar}, $\bar X_n$ est sans biais pour $\mu$ et $\mathrm{EQM}(\bar X_n)=\sigma^2/n$.
+\end{exemple}
+
+\subsection{Intervalle de confiance d'une proportion}
+
+\begin{proposition}[admise, conséquence du théorème central limite]
+\label{prop:ic}
+Si $\hat p$ est la proportion observée d'un caractère sur $n$ individus tirés au hasard, alors pour $n$ grand,
+\[
+  \Big[\hat p-1{,}96\sqrt{\tfrac{\hat p(1-\hat p)}{n}}\ ;\ \hat p+1{,}96\sqrt{\tfrac{\hat p(1-\hat p)}{n}}\Big]
+\]
+contient la vraie proportion $p$ avec une probabilité d'environ $95\,\%$.
+\end{proposition}
+Au chapitre~1, $\hat p$ sera le taux d'erreur d'un classifieur mesuré sur un échantillon test.
+
+\subsection{Maximum de vraisemblance}
+
+\begin{definition}[Vraisemblance, estimateur du maximum de vraisemblance]
+Si les observations $x_1,\dots,x_n$ sont indépendantes, de loi dépendant d'un paramètre $\theta$ (probabilité ou densité $p_\theta$), la \emph{vraisemblance} est
+$\mathcal L(\theta)=p_\theta(x_1)\times\dots\times p_\theta(x_n)$ : la probabilité d'avoir observé ces données si le paramètre vaut $\theta$.
+L'\emph{estimateur du maximum de vraisemblance} est la valeur de $\theta$ qui rend $\mathcal L(\theta)$, ou de façon équivalente $\log\mathcal L(\theta)$, la plus grande.
+\end{definition}
+
+\begin{exemple}[Proportion]
+Pour des observations $x_i\in\{0,1\}$ de loi $\mathcal B(\theta)$, avec $s=\sum_ix_i$ succès ($0<s<n$) :
+$\log\mathcal L(\theta)=s\log\theta+(n-s)\log(1-\theta)$, de dérivée $\frac s\theta-\frac{n-s}{1-\theta}$, nulle pour $\hat\theta=s/n$ : la proportion observée.
+\end{exemple}
+
+\begin{remarque}
+Maximiser la vraisemblance revient à minimiser $-\log\mathcal L(\theta)$, une somme d'erreurs sur les observations. La régression logistique du chapitre~3 est construite ainsi.
+\end{remarque}
+
+\subsection*{Exercices}
+
+\begin{exercice}[Un biais qui paie]
+\label{ex:shrinkage}
+Soient $X_1,\dots,X_n$ indépendantes, de moyenne $\mu\ne0$ et de variance $\sigma^2$. Pour $c\in\R$, on estime $\mu$ par $c\,\bar X_n$.
+Calculer le biais, la variance, puis l'erreur quadratique moyenne de $c\,\bar X_n$. Montrer qu'elle est minimale pour $c^*=\dfrac{\mu^2}{\mu^2+\sigma^2/n}<1$.
+Pourquoi ce $c^*$ n'est-il pas directement utilisable ?
+\end{exercice}
+
+\begin{exercice}[Intervalle de confiance]
+\label{ex:ic}
+Un classifieur se trompe sur $45$ des $300$ individus d'un échantillon test. Donner un intervalle de confiance à $95\,\%$ pour son taux d'erreur.
+\end{exercice}

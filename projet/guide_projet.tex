@@ -1,0 +1,181 @@
+% =====================================================================
+%  Guide du projet de groupe et de l'accès aux données DHS
+%  Introduction au Machine Learning -- CNFSDP -- L3 S5 -- 2026-2027
+%  Compilation : pdflatex guide_projet.tex (deux fois)
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage{cnfsdp-poly}
+
+\chapitre{}{Guide du projet de groupe}
+         {Organisation, accès aux données DHS, charte d'utilisation}
+
+% Page de titre et en-tête propres à ce guide (pas de numéro de chapitre)
+\makeatletter
+\fancyhead[R]{\small\color{cnfGris}Guide du projet de groupe}
+\renewcommand{\pagedetitre}{%
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0] at ([xshift=2.3cm,yshift=-2.0cm]current page.north west)
+      {\includegraphics[height=18mm]{logo_cnfsdp.png}};
+    \node[anchor=north east,align=right,inner sep=0,font=\small\color{cnfGris}]
+      at ([xshift=-2.3cm,yshift=-2.2cm]current page.north east)
+      {Centre National de Formation en Statistique,\\Démographie et Planification\\[0.3ex]\cnfVille};
+    \node[anchor=south west,inner sep=0] at (current page.south west)
+      {\cnfBande{\paperwidth}{3mm}};
+  \end{tikzpicture}\par
+  \vspace*{4.6cm}
+  {\large\color{cnfGris}\cnfCours\par}
+  \vspace{4mm}
+  {\fontsize{24}{29}\selectfont\bfseries\color{cnfVert}Guide du projet de groupe\par}
+  \vspace{3mm}
+  {\large Organisation, accès aux données DHS, charte d'utilisation\par}
+  \vspace{5mm}
+  \cnfBande{3.2cm}{1mm}
+  \vspace{1.6cm}
+
+  {\large\bfseries\cnfAuteur\par}
+  {\small\color{cnfGris}\cnfTitreAuteur\par}
+  \vspace{1cm}
+  {\small\cnfNiveau\par}
+  {\small\color{cnfGris}\cnfAnnee\par}
+  \vfill
+  {\small\color{cnfGris}Supports, notebooks et TP : \url{https://\cnfDepot}\par}
+  \vspace*{1.2cm}
+  \newpage}
+\renewtcolorbox{objectifs}{cnfbase,colback=cnfGrisClair,colframe=cnfGrisClair,
+  title={Objet de ce guide},coltitle=cnfVert,colbacktitle=cnfGrisClair}
+\makeatother
+
+\newtcolorbox{modele}[1]{cnfbase,colback=white,colframe=cnfVert,boxrule=0.6pt,
+  title={#1},coltitle=white,colbacktitle=cnfVert,fonttitle=\bfseries\small}
+
+\begin{document}
+\pagedetitre
+
+\begin{objectifs}
+Ce guide accompagne le chapitre~5 (projet de bout en bout). Il rassemble ce qu'il faut pour démarrer le projet : la répartition des groupes, le calendrier, l'accès aux données DHS par l'autorisation de classe, la charte d'utilisation à signer, et, pour plus tard, la procédure pour obtenir les données en son nom.
+\end{objectifs}
+
+\section{Organisation}
+
+\begin{itemize}
+  \item \textbf{Groupes} : $36$ étudiants, $9$ groupes de $4$ ; une variante différente par groupe, attribuée en salle.
+  \item \textbf{Données} : Enquête démographique et de santé du Congo 2011-2012 (EDS, programme DHS), fichiers originaux.
+  \item \textbf{Travail demandé} : une question de prédiction (chapitres~1 à~3), une analyse non supervisée (ACP, typologie, chapitre~4), un audit d'équité et une discussion des limites (chapitre~5).
+  \item \textbf{Livrables} : un rapport de $10$ pages et un notebook ; une soutenance de $15$ minutes où chacun des quatre membres présente une partie.
+  \item \textbf{Calendrier} : remise du rapport et soutenances \textbf{fin novembre 2026}, deux à trois semaines après le chapitre~5 ; dates exactes annoncées en salle.
+  \item \textbf{Évaluation du cours} : examen sur table $40\,\%$, rapport et notebook $40\,\%$, soutenance $20\,\%$.
+\end{itemize}
+
+\begin{center}
+  \small\renewcommand{\arraystretch}{1.15}\setlength\tabcolsep{4pt}
+  \begin{tabular}{cllp{0.36\textwidth}p{0.24\textwidth}}
+    \toprule
+    \textbf{gr.} & \textbf{thème} & \textbf{fichier} & \textbf{cible à prédire} & \textbf{variante} \\
+    \midrule
+    1 & richesse & \texttt{HR} & ménage dans les 40\,\% les plus pauvres & indice national (ACP), comparé à \texttt{hv271} \\
+    2 & richesse & \texttt{HR} & ménage dans les 40\,\% les plus pauvres & indices urbain et rural séparés \\
+    3 & vaccination & \texttt{KR} & vaccination complète (\texttt{h2} à \texttt{h9}) & enfants de 12 à 23 mois \\
+    4 & vaccination & \texttt{KR} & abandon : DTC1 reçu, DTC3 non & enfants de 12 à 23 mois \\
+    5 & vaccination & \texttt{KR} & rougeole (\texttt{h9}) & enfants de 12 à 23 mois \\
+    6 & nutrition & \texttt{KR} & retard de croissance (\texttt{hw70} $<-200$) & enfants de moins de 5 ans \\
+    7 & nutrition & \texttt{KR} & insuffisance pondérale (\texttt{hw71} $<-200$) & enfants de moins de 5 ans \\
+    8 & femme & \texttt{IR} & contraception moderne (\texttt{v313} $=3$) & femmes en union \\
+    9 & femme & \texttt{IR} & besoins non satisfaits en contraception & femmes en union \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+{\small\color{cnfGris}Codes à vérifier dans le dictionnaire de l'enquête (par exemple, exclure les codes $\ge9996$ de \texttt{hw70} et \texttt{hw71}). Les groupes 1 et 2 prédisent la pauvreté avec des variables qui ne servent pas à construire l'indice (taille du ménage, chef de ménage, région).}
+
+\section{Accès aux données pour le cours : l'autorisation de classe}
+
+\begin{aretenir}
+Pour ce cours, l'enseignant demande au programme DHS une \textbf{autorisation pour toute la classe}. Les étudiants n'ont pas de compte à créer : les fichiers leur sont remis par l'enseignant, pour le seul projet du cours, dans les conditions fixées par l'accord écrit de DHS. Ce qui est rendu, c'est le code et le rapport, jamais les données.
+\end{aretenir}
+
+\subsection*{La procédure suivie par l'enseignant}
+Elle est décrite ici pour qu'un futur enseignant, ou un étudiant devenu enseignant, puisse la reprendre.
+\begin{enumerate}
+  \item \textbf{Créer son compte} d'utilisateur DHS (voir la section~\ref{sec:demande} pour les précautions d'inscription).
+  \item \textbf{Repérer l'option « Instructors »} : sur la page de création d'un projet, DHS indique que les enseignants peuvent faire autoriser leur classe sans inscription individuelle des étudiants, sur demande par courriel.
+  \item \textbf{Écrire à} \texttt{archive@dhsprogram.com} depuis l'adresse du compte, en précisant : l'établissement et le cours ; l'effectif (avec la liste nominative des étudiants si DHS la demande) ; l'enquête et les fichiers (Congo DHS 2011-12, fichiers ménages \texttt{HR}, femmes \texttt{IR}, enfants \texttt{KR}, format Stata ou SPSS) ; l'usage (projets de groupe encadrés) ; les dates (octobre à décembre 2026) ; les règles imposées aux étudiants.
+  \item \textbf{Attendre la réponse} de DHS, qui fixe les conditions de l'autorisation, puis télécharger les fichiers depuis le compte de l'enseignant.
+  \item \textbf{Remettre les fichiers} aux seuls étudiants inscrits, par un canal privé (clé USB en salle ou dossier partagé restreint à la classe), après signature de la charte ci-dessous. Jamais de dépôt public.
+  \item \textbf{Clore} : à la fin du cours, rappeler aux étudiants de supprimer leurs copies, sauf autre disposition de l'accord DHS.
+\end{enumerate}
+
+\begin{modele}{Charte d'utilisation des données DHS \textendash{} à signer par chaque étudiant}
+\raggedright
+Je soussigné(e) \dotfill{} , étudiant(e) du cours \emph{Introduction au Machine Learning} (CNFSDP, 2026-2027), reçois de l'enseignant les fichiers de l'Enquête démographique et de santé du Congo 2011-2012, mis à disposition par le programme DHS au titre d'une autorisation de classe. Je m'engage à :
+\begin{itemize}
+  \item n'utiliser ces données que pour le projet de groupe du cours ;
+  \item ne les transmettre à personne, pas même à un autre étudiant ou à un autre groupe : chacun reçoit sa copie de l'enseignant ;
+  \item ne jamais les déposer sur Internet (GitHub, messagerie, réseaux sociaux, dossier partagé public) ;
+  \item ne tenter d'identifier aucune personne ni aucun ménage ;
+  \item supprimer mes copies à la fin du cours.
+\end{itemize}
+\medskip
+Date : \rule{3.5cm}{0.4pt} \hfill Signature : \rule{5cm}{0.4pt}
+\end{modele}
+
+\section{Pour plus tard : faire sa propre demande DHS}
+\label{sec:demande}
+
+Après le cours, pour un mémoire, un stage ou une recherche, chacun peut obtenir les données DHS \emph{en son nom}. L'autorisation de classe ne couvre que le projet du cours.
+
+\begin{enumerate}
+  \item \textbf{Créer son compte} : \url{https://dhsprogram.com/data/new-user-registration.cfm}
+        \begin{itemize}
+          \item sur un \textbf{ordinateur} (le formulaire ne fonctionne pas sur téléphone) ;
+          \item \textbf{sans traduction automatique} : si le navigateur propose de traduire la page, refuser (« Afficher l'original ») et recharger la page ;
+          \item \textbf{tous les champs en anglais et sans accents}, par exemple \emph{Centre National de Formation en Statistique, Demographie et Planification}, écrit en entier ;
+          \item pays de résidence : \emph{Congo} (et non \emph{Congo Democratic Republic}) ; téléphone avec l'indicatif \texttt{+242} ; mot de passe de $8$ à $15$ caractères ;
+          \item une adresse électronique que vous consultez : elle sert d'identifiant, et l'accord arrive par courriel.
+        \end{itemize}
+  \item \textbf{Créer un projet} (\emph{Create New Project}) : titre, co-chercheurs éventuels (facultatif), description de l'analyse prévue (modèle ci-dessous, à adapter).
+  \item \textbf{Choisir le pays et l'enquête}, puis les jeux de données d'enquête (\emph{survey datasets}) ; les données GPS ou biomarqueurs demandent des engagements supplémentaires.
+  \item \textbf{Attendre l'accord}, en général sous $24$ à $48$ heures ouvrées, puis télécharger. Instructions officielles : \url{https://dhsprogram.com/data/Access-Instructions.cfm}
+\end{enumerate}
+
+\begin{remarque}[Si la connexion échoue sans message d'erreur]
+Repartir de la page \url{https://dhsprogram.com/data/dataset_admin/login_main.cfm} sans rien ajouter à l'adresse ; effacer les cookies du site \texttt{dhsprogram.com} ou ouvrir une fenêtre de navigation privée ; désactiver la traduction ; vérifier les majuscules du mot de passe ; à défaut, utiliser « mot de passe oublié » ou écrire à \texttt{archive@dhsprogram.com}.
+\end{remarque}
+
+\begin{modele}{Modèle de description de projet (en anglais, sans accents ; remplacer les crochets)}
+\raggedright
+\textbf{Project Title:}\\
+{}[Short title, for example: Determinants of child vaccination in the Republic of the Congo]
+\medskip
+
+\textbf{Description:}\\
+I am [a master student / a statistician] at [full name of the institution], [city, country]. I will use the [survey, for example Congo DHS 2011-12] [files, for example household, women and children recode files] to study [research question]. Methods: [for example logistic regression, random forests, principal component analysis]. The results will be presented in [a thesis / a report / an article]. The data will be kept on my own computer and will not be shared or published.
+\end{modele}
+
+\section{Après réception des fichiers : premiers pas}
+
+Ranger les fichiers dans un dossier \texttt{donnees/}. Le fichier \texttt{.gitignore} du projet doit contenir au moins les lignes suivantes, pour que les données ne partent jamais sur GitHub :
+\begin{terminal}
+donnees/
+*.DTA
+*.dta
+*.SAV
+*.sav
+\end{terminal}
+
+On ne lit que les variables utiles, en gardant les codes, comme au TP5 :
+\begin{python}
+import numpy as np, pandas as pd
+fichier = "donnees/CGKR61FL.DTA"                     # fichier enfants (KR), à adapter
+with pd.io.stata.StataReader(fichier) as lecteur:
+    etiquettes = lecteur.value_labels()              # codes -> libellés
+    libelles = lecteur.variable_labels()             # nom long de chaque variable
+colonnes = ["v005", "v024", "v025", "v106", "v190", "b4", "bord", "h2", "h3", "h9"]
+df = pd.read_stata(fichier, columns=colonnes, convert_categoricals=False)
+df["poids"] = df["v005"] / 1e6                       # poids de sondage
+\end{python}
+
+\begin{remarque}[Avant de modéliser]
+Lire le dictionnaire de l'enquête ; repérer les codes spéciaux (\emph{ne sait pas}, \emph{manquant}) ; vérifier les effectifs et les taux connus du rapport officiel de l'enquête ; puis seulement découper en apprentissage et test (chapitre~5).
+\end{remarque}
+
+\end{document}

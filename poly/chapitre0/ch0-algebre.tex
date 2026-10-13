@@ -1,0 +1,111 @@
+\section{Vecteurs et matrices}
+\label{sec:algebre}
+
+Un jeu de données est un tableau de nombres. Les vecteurs et les matrices permettent de le manipuler d'un bloc ; ils servent surtout à la régression linéaire (chapitre~2) et à l'ACP (chapitre~4).
+
+\subsection{Vecteurs}
+
+\begin{definition}[Vecteur, produit scalaire, norme]
+Un \emph{vecteur} de $\R^d$ est une liste de $d$ nombres $x=(x_1,\dots,x_d)$, écrite en colonne.
+Le \emph{produit scalaire} de deux vecteurs $x$ et $y$ est le nombre $\ps{x}{y}=x_1y_1+\dots+x_dy_d$.
+La \emph{norme} (longueur) de $x$ est $\norm{x}=\sqrt{\ps{x}{x}}=\sqrt{x_1^2+\dots+x_d^2}$.
+Deux vecteurs sont \emph{orthogonaux} si $\ps{x}{y}=0$.
+\end{definition}
+
+\begin{exemple}
+Pour $x=(1,2,2)$ et $y=(2,0,-1)$ : $\ps{x}{y}=2+0-2=0$, donc $x$ et $y$ sont orthogonaux, et $\norm{x}=\sqrt{1+4+4}=3$.
+Un vecteur de norme $1$ est dit \emph{unitaire} : il indique une direction.
+\end{exemple}
+
+\subsection{Matrices}
+
+\begin{definition}[Matrice, transposée, produit]
+Une \emph{matrice} $A$ de taille $n\times d$ est un tableau de nombres à $n$ lignes et $d$ colonnes ; $A_{ij}$ est le nombre en ligne $i$, colonne $j$.
+Sa \emph{transposée} $A\T$, de taille $d\times n$, échange lignes et colonnes : $(A\T)_{ij}=A_{ji}$.
+Si $A$ est de taille $n\times d$ et $B$ de taille $d\times p$, le \emph{produit} $AB$ est la matrice $n\times p$ de coefficients
+\[
+  (AB)_{ij}=\sum_{k=1}^dA_{ik}B_{kj}\qquad\text{(ligne $i$ de $A$ « fois » colonne $j$ de $B$).}
+\]
+\end{definition}
+
+\begin{exemple}
+$\begin{pmatrix}1&2\\3&4\end{pmatrix}\begin{pmatrix}5\\6\end{pmatrix}=\begin{pmatrix}1\times5+2\times6\\3\times5+4\times6\end{pmatrix}=\begin{pmatrix}17\\39\end{pmatrix}$.
+Attention : en général $AB\ne BA$.
+\end{exemple}
+
+\begin{definition}[Matrice identité, inverse]
+La matrice \emph{identité} $I_d$ a des $1$ sur la diagonale et des $0$ ailleurs : $I_dx=x$.
+Une matrice carrée $A$ est \emph{inversible} s'il existe une matrice $A^{-1}$ telle que $AA^{-1}=A^{-1}A=I_d$.
+Le système linéaire $A\beta=b$ a alors une unique solution, $\beta=A^{-1}b$.
+\end{definition}
+
+\begin{proposition}[Inverse d'une matrice $2\times2$]
+$A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ est inversible si et seulement si $ad-bc\ne0$, et alors
+$A^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.
+\end{proposition}
+\begin{preuve}
+Un calcul direct donne $\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}=(ad-bc)\,I_2$ : si $ad-bc\ne0$, on divise par $ad-bc$.
+(La réciproque, si $ad-bc=0$, est admise.)
+\end{preuve}
+
+\subsection{Le tableau de données et la matrice de covariance}
+
+\begin{definition}[Tableau de données, centrage, covariance empirique]
+On range les observations dans une matrice $X$ de taille $n\times d$ : la ligne $i$ décrit l'individu $i$, la colonne $j$ la variable $j$.
+Le \emph{vecteur des moyennes} est $\bar x=(\bar x_1,\dots,\bar x_d)$, où $\bar x_j$ est la moyenne de la colonne $j$.
+Le tableau \emph{centré} $X_c$ s'obtient en retranchant à chaque colonne sa moyenne.
+La \emph{matrice de covariance empirique} est la matrice $d\times d$
+\[
+  S=\frac1n\,X_c\T X_c ,
+\]
+dont le coefficient $S_{jk}$ est la covariance empirique des variables $j$ et $k$, et le coefficient diagonal $S_{jj}$ la variance empirique de la variable $j$.
+\end{definition}
+
+\begin{exemple}
+Trois individus, deux variables : $X=\begin{pmatrix}1&2\\2&2\\3&5\end{pmatrix}$, de moyennes $\bar x=(2,3)$.
+Alors $X_c=\begin{pmatrix}-1&-1\\0&-1\\1&2\end{pmatrix}$ et
+$S=\frac13\begin{pmatrix}2&3\\3&6\end{pmatrix}=\begin{pmatrix}2/3&1\\1&2\end{pmatrix}$.
+La covariance positive ($S_{12}=1$) indique que les deux variables augmentent ensemble.
+\end{exemple}
+
+La matrice $S$ est \emph{symétrique} : $S\T=S$.
+
+\subsection{Valeurs propres et vecteurs propres}
+
+\begin{definition}[Valeur propre, vecteur propre]
+Soit $A$ une matrice carrée. Un vecteur $u\ne0$ est un \emph{vecteur propre} de $A$, associé à la \emph{valeur propre} $\lambda$, si
+$Au=\lambda u$ : la matrice ne fait qu'allonger ou raccourcir $u$, sans changer sa direction.
+\end{definition}
+
+\begin{theoreme}[Matrices symétriques, admis]
+\label{thm:spectral}
+Une matrice symétrique $A$ de taille $d\times d$ possède $d$ valeurs propres réelles $\lambda_1\ge\lambda_2\ge\dots\ge\lambda_d$, et l'on peut choisir des vecteurs propres associés $u_1,\dots,u_d$ unitaires et deux à deux orthogonaux.
+Si $A$ est une matrice de covariance, toutes ses valeurs propres sont positives ou nulles.
+\end{theoreme}
+
+\begin{exemple}
+Pour $A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$ : $A\begin{pmatrix}1\\1\end{pmatrix}=\begin{pmatrix}3\\3\end{pmatrix}$ et $A\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}1\\-1\end{pmatrix}$.
+Les valeurs propres sont $3$ et $1$, de vecteurs propres unitaires $u_1=\frac{1}{\sqrt2}(1,1)$ et $u_2=\frac{1}{\sqrt2}(1,-1)$, qui sont bien orthogonaux.
+\end{exemple}
+
+\begin{remarque}[À quoi cela sert]
+En ACP (chapitre~4), on cherche la direction $u$ (vecteur unitaire) selon laquelle les individus sont le plus dispersés.
+La variance des individus projetés sur $u$ vaut $u\T Su$ ; elle est maximale pour le premier vecteur propre $u_1$ de $S$, et vaut alors $\lambda_1$.
+\end{remarque}
+
+\subsection*{Exercices}
+
+\begin{exercice}[Produit de matrices]
+\label{ex:produit}
+Calculer $A\T A$ pour $A=\begin{pmatrix}1&0\\1&1\\1&2\end{pmatrix}$, puis l'inverse de $A\T A$.
+\end{exercice}
+
+\begin{exercice}[Covariance empirique]
+\label{ex:covariance}
+Quatre ménages ont pour taille $2,4,4,6$ et pour nombre de pièces $1,2,3,2$. Calculer la matrice de covariance empirique $S$ de ces deux variables, puis la corrélation $S_{12}/\sqrt{S_{11}S_{22}}$.
+\end{exercice}
+
+\begin{exercice}[Valeurs propres]
+\label{ex:spectre}
+Vérifier que $(1,1)$ et $(1,-1)$ sont des vecteurs propres de $B=\begin{pmatrix}5&3\\3&5\end{pmatrix}$ et donner les valeurs propres associées.
+\end{exercice}

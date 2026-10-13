@@ -1,0 +1,26 @@
+DEMANDE PERSONNELLE DE DONNEES DHS (pour un memoire, un stage ou une recherche apres le cours)
+Introduction au Machine Learning, CNFSDP, 2026-2027
+
+Pour le projet du cours, rien a faire : l'enseignant a obtenu une autorisation de classe.
+Ce fichier sert plus tard, pour obtenir les donnees en son nom.
+
+Liens utiles
+- Creer son compte : https://dhsprogram.com/data/new-user-registration.cfm
+- Se connecter : https://dhsprogram.com/data/dataset_admin/login_main.cfm
+- Instructions d'acces aux donnees : https://dhsprogram.com/data/Access-Instructions.cfm
+- Contact du programme DHS : archive@dhsprogram.com
+
+Pour creer le compte : sur ordinateur, SANS traduction automatique de la page,
+tous les champs en anglais et sans accents (ex. : Centre National de Formation en
+Statistique, Demographie et Planification), pays : Congo (pas Congo Democratic Republic).
+Si la connexion echoue sans message : repartir de l'adresse de connexion ci-dessus sans
+rien y ajouter, effacer les cookies de dhsprogram.com ou ouvrir une fenetre privee.
+
+
+MODELE DE PROJET (Create New Project) - remplacer les crochets
+
+Project Title:
+[Short title, for example: Determinants of child vaccination in the Republic of the Congo]
+
+Description:
+I am [a master student / a statistician] at [full name of the institution], [city, country]. I will use the [survey, for example Congo DHS 2011-12] [files, for example household, women and children recode files] to study [research question]. Methods: [for example logistic regression, random forests, principal component analysis]. The results will be presented in [a thesis / a report / an article]. The data will be kept on my own computer and will not be shared or published.

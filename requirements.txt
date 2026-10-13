@@ -1,0 +1,9 @@
+# Alternative à environment.yml : pip install -r requirements.txt
+numpy
+pandas
+scipy
+matplotlib
+scikit-learn
+jupyter
+ipykernel
+pyreadstat

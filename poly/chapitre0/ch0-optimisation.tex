@@ -1,0 +1,104 @@
+\section{Minimiser une fonction}
+\label{sec:optimisation}
+
+Apprendre, c'est presque toujours chercher les paramètres qui rendent une erreur la plus petite possible. Il faut donc savoir trouver le minimum d'une fonction.
+
+\subsection{Fonctions d'une variable}
+
+\begin{definition}[Minimum, minimiseur]
+\label{def:minimum}
+On dit qu'une fonction $g$ \emph{atteint son minimum} en $c^*$ si $g(c^*)\le g(c)$ pour tout $c$.
+Le point $c^*$ est alors un \emph{minimiseur} de $g$, et $g(c^*)$ la \emph{valeur minimale}. On note $c^*\in\argmin_cg(c)$.
+\end{definition}
+
+\begin{proposition}[Rappels, admis]
+\label{prop:min1d}
+Soit $g$ une fonction deux fois dérivable sur $\R$.
+\begin{enumerate}[label=(\roman*)]
+  \item Si $g$ atteint son minimum en $c^*$, alors $g'(c^*)=0$.
+  \item Si $g''(c)\ge0$ pour tout $c$ (on dit que $g$ est \emph{convexe} : sa courbe est « en cuvette »), alors tout point où $g'$ s'annule est un minimiseur.
+  \item Si $g''(c)>0$ pour tout $c$, il y a au plus un minimiseur. (C'est une condition suffisante, pas nécessaire : $c\mapsto c^4$ n'a qu'un minimiseur alors que sa dérivée seconde s'annule en $0$.)
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[La moyenne minimise les écarts au carré]
+\label{prop:moyenne}
+Pour des nombres $y_1,\dots,y_n$, la fonction $g(c)=\sum_{i=1}^n(y_i-c)^2$ atteint son minimum en un unique point, la moyenne $\bar y$.
+\end{proposition}
+\begin{preuve}
+$g'(c)=-2\sum_i(y_i-c)=-2\big(\sum_iy_i-nc\big)$ s'annule pour $c=\frac1n\sum_iy_i=\bar y$, et $g''(c)=2n>0$ : on conclut par la proposition~\ref{prop:min1d}.
+\end{preuve}
+
+\begin{remarque}
+Si l'on minimise plutôt $\sum_i|y_i-c|$ (écarts absolus), le minimiseur est une \emph{médiane} des $y_i$ (admis).
+Ces deux résultats expliquent pourquoi la perte quadratique conduit à prédire des moyennes et la perte absolue des médianes (chapitre~1).
+\end{remarque}
+
+\subsection{Fonctions de plusieurs variables}
+
+\begin{definition}[Dérivées partielles, gradient]
+Pour une fonction $L(a,b)$ de deux variables, la \emph{dérivée partielle} $\frac{\partial L}{\partial a}$ est la dérivée par rapport à $a$, $b$ étant traité comme une constante (et de même pour $b$).
+Le \emph{gradient} est le vecteur $\nabla L=\big(\frac{\partial L}{\partial a},\frac{\partial L}{\partial b}\big)$ ; il indique la direction dans laquelle $L$ augmente le plus vite.
+\end{definition}
+
+Comme en dimension $1$ : si $L$ atteint son minimum en un point, son gradient y est nul ; et si $L$ est convexe (en forme de cuvette), un point où le gradient s'annule est un minimiseur (admis).
+
+\begin{proposition}[Droite des moindres carrés]
+\label{prop:droite}
+Soient des couples $(x_1,y_1),\dots,(x_n,y_n)$ avec des $x_i$ non tous égaux. La fonction
+$L(a,b)=\sum_{i=1}^n\big(y_i-a-bx_i\big)^2$ atteint son minimum en
+\[
+  \hat b=\frac{s_{xy}}{s_x^2},\qquad \hat a=\bar y-\hat b\,\bar x,
+\]
+où $s_x^2=\frac1n\sum_i(x_i-\bar x)^2$ est la variance empirique des $x_i$ et $s_{xy}=\frac1n\sum_i(x_i-\bar x)(y_i-\bar y)$ la covariance empirique.
+\end{proposition}
+\begin{preuve}
+$\frac{\partial L}{\partial a}=-2\sum_i(y_i-a-bx_i)=0$ donne $a=\bar y-b\bar x$.
+En reportant, $\frac{\partial L}{\partial b}=-2\sum_ix_i\big((y_i-\bar y)-b(x_i-\bar x)\big)=0$. Comme $\sum_i\bar x\big((y_i-\bar y)-b(x_i-\bar x)\big)=0$, on peut remplacer $x_i$ par $x_i-\bar x$, ce qui donne
+$\sum_i(x_i-\bar x)(y_i-\bar y)=b\sum_i(x_i-\bar x)^2$, soit $b=s_{xy}/s_x^2$. La fonction $L$ étant convexe (admis), ce point est le minimiseur.
+\end{preuve}
+
+\begin{exemple}
+Pour $x=(1,2,3)$ et $y=(2,2,5)$ : $\bar x=2$, $\bar y=3$, $s_x^2=\frac23$, $s_{xy}=1$, donc $\hat b=1{,}5$ et $\hat a=0$. La droite $y=1{,}5\,x$ est celle qui passe « au plus près » des trois points.
+C'est le point de départ de la régression linéaire du chapitre~2.
+\end{exemple}
+
+\subsection{La descente de gradient}
+
+Quand on ne sait pas résoudre $\nabla L=0$ à la main (c'est le cas de la régression logistique, chapitre~3), on s'approche du minimum pas à pas.
+
+\begin{definition}[Descente de gradient]
+Partant d'un point $\theta_0$, on répète $\theta_{k+1}=\theta_k-\eta\,\nabla L(\theta_k)$, où $\eta>0$ est le \emph{pas} : on fait un petit pas dans la direction où $L$ descend le plus vite.
+\end{definition}
+
+\begin{proposition}[Un exemple où tout se calcule]
+\label{prop:gd}
+Pour $L(\theta)=(\theta-3)^2$, la descente de gradient de pas $\eta$ vérifie $\theta_k-3=(1-2\eta)^k(\theta_0-3)$.
+Elle converge vers le minimiseur $3$ si et seulement si $0<\eta<1$.
+\end{proposition}
+\begin{preuve}
+$L'(\theta)=2(\theta-3)$, donc $\theta_{k+1}-3=\theta_k-3-2\eta(\theta_k-3)=(1-2\eta)(\theta_k-3)$, et l'on itère.
+La suite $(1-2\eta)^k$ tend vers $0$ si et seulement si $|1-2\eta|<1$, c'est-à-dire $0<\eta<1$.
+\end{preuve}
+
+\begin{remarque}[Lecture]
+Un pas trop petit avance lentement ; un pas trop grand fait « sauter » par-dessus le minimum et peut diverger. Avec $\theta_0=0$ et $\eta=0{,}25$ : $\theta_1=1{,}5$, $\theta_2=2{,}25$, $\theta_3=2{,}625$\dots{} vers $3$.
+\end{remarque}
+
+\subsection*{Exercices}
+
+\begin{exercice}[La meilleure constante]
+\label{ex:constante}
+Les revenus mensuels (en milliers de FCFA) de cinq ménages sont $80,100,120,150,550$.
+Quelle constante minimise la somme des écarts au carré ? la somme des écarts absolus ? Commenter l'effet du revenu $550$.
+\end{exercice}
+
+\begin{exercice}[Droite des moindres carrés]
+\label{ex:droite}
+Calculer la droite des moindres carrés pour les points $(0,1),(1,3),(2,4),(3,8)$.
+\end{exercice}
+
+\begin{exercice}[Choix du pas]
+\label{ex:gd}
+Pour $L(\theta)=2\theta^2$, écrire la descente de gradient de pas $\eta$, puis trouver les valeurs de $\eta$ pour lesquelles elle converge vers $0$.
+\end{exercice}

@@ -1,0 +1,127 @@
+\section{Probabilités}
+\label{sec:probabilites}
+
+Les données sont vues comme les réalisations de variables aléatoires. C'est ce qui permet de parler d'« erreur moyenne » d'un modèle sur toute une population (chapitre~1).
+
+\subsection{Variables aléatoires, espérance, variance}
+
+\begin{definition}[Variable aléatoire, loi]
+Une \emph{variable aléatoire} $X$ est une quantité dont la valeur dépend du hasard (l'individu tiré au sort, par exemple).
+Elle est \emph{discrète} si elle prend des valeurs isolées $x_1,x_2,\dots$ avec des probabilités $p_k=\P(X=x_k)$ ;
+elle est \emph{continue} si elle a une \emph{densité} $f\ge0$ telle que $\P(a\le X\le b)=\int_a^bf(x)\,dx$.
+\end{definition}
+
+\begin{definition}[Espérance, variance, écart-type]
+L'\emph{espérance} (moyenne théorique) de $X$ est $\E[X]=\sum_kx_kp_k$ dans le cas discret, $\E[X]=\int xf(x)\,dx$ dans le cas continu.
+La \emph{variance} mesure la dispersion autour de la moyenne : $\Var(X)=\E\big[(X-\E[X])^2\big]$ ; l'\emph{écart-type} est $\sqrt{\Var(X)}$.
+\end{definition}
+
+\begin{proposition}[Règles de calcul]
+\label{prop:regles}
+Pour des variables $X,Y$ et des réels $a,b$ :
+\begin{enumerate}[label=(\roman*)]
+  \item $\E[aX+bY]=a\E[X]+b\E[Y]$ (linéarité) ;
+  \item $\Var(X)=\E[X^2]-(\E[X])^2$ et $\Var(aX+b)=a^2\Var(X)$.
+\end{enumerate}
+\end{proposition}
+\begin{preuve}
+(i) est admis. (ii) : en développant, $\E[(X-\E X)^2]=\E[X^2]-2\E[X]\E[X]+(\E X)^2$. Puis $aX+b-\E[aX+b]=a(X-\E X)$, dont le carré vaut $a^2(X-\E X)^2$.
+\end{preuve}
+
+\begin{proposition}[La meilleure constante est l'espérance]
+\label{prop:meilleureconstante}
+Pour toute variable $Z$ de variance finie et tout réel $c$ :
+\[
+  \E\big[(Z-c)^2\big]=\Var(Z)+\big(\E[Z]-c\big)^2 .
+\]
+Donc $c\mapsto\E[(Z-c)^2]$ atteint son minimum en $c=\E[Z]$, et la valeur minimale est $\Var(Z)$.
+\end{proposition}
+\begin{preuve}
+On écrit $Z-c=(Z-\E Z)+(\E Z-c)$ et l'on développe :
+$\E[(Z-c)^2]=\Var(Z)+2(\E Z-c)\E[Z-\E Z]+(\E Z-c)^2$, et $\E[Z-\E Z]=0$.
+\end{preuve}
+C'est la version « population » de la proposition~\ref{prop:moyenne}, et c'est elle qui donne le meilleur prédicteur au chapitre~1.
+
+\subsection{Covariance, corrélation, indépendance}
+
+\begin{definition}[Covariance, corrélation]
+$\Cov(X,Y)=\E\big[(X-\E X)(Y-\E Y)\big]$ et, si les variances sont non nulles, la \emph{corrélation} est
+$\rho(X,Y)=\dfrac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}}$, toujours comprise entre $-1$ et $1$ (admis).
+\end{definition}
+
+\begin{definition}[Indépendance]
+$X$ et $Y$ sont \emph{indépendantes} si connaître la valeur de l'une ne change pas la loi de l'autre : $\P(X\in A,\,Y\in B)=\P(X\in A)\,\P(Y\in B)$ pour tous ensembles $A$, $B$.
+\end{definition}
+
+\begin{proposition}[admise]
+\label{prop:indep}
+Si $X$ et $Y$ sont indépendantes, alors $\Cov(X,Y)=0$. Dans tous les cas, $\Var(X+Y)=\Var(X)+\Var(Y)+2\Cov(X,Y)$.
+\end{proposition}
+
+\begin{remarque}
+Une covariance nulle n'implique pas l'indépendance : la corrélation ne mesure que la liaison \emph{linéaire}.
+\end{remarque}
+
+\subsection{Lois usuelles}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llll}
+\toprule
+\textbf{Loi} & \textbf{Description} & $\E[X]$ & $\Var(X)$ \\
+\midrule
+Bernoulli $\mathcal B(p)$ & $X=1$ avec probabilité $p$, $0$ sinon & $p$ & $p(1-p)$ \\
+Binomiale $\mathcal B(n,p)$ & nombre de succès en $n$ essais indépendants & $np$ & $np(1-p)$ \\
+Uniforme $\mathcal U[a,b]$ & densité constante $\frac{1}{b-a}$ sur $[a,b]$ & $\frac{a+b}{2}$ & $\frac{(b-a)^2}{12}$ \\
+Normale $\mathcal N(\mu,\sigma^2)$ & densité $\frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/(2\sigma^2)}$ & $\mu$ & $\sigma^2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Si $Z\sim\mathcal N(0,1)$, on note $\Phi(t)=\P(Z\le t)$ ; on retiendra $\P(-1{,}96\le Z\le1{,}96)\approx0{,}95$.
+
+\subsection{Moyenne d'un échantillon et théorèmes limites}
+
+\begin{proposition}[Espérance et variance d'une moyenne]
+\label{prop:moyennevar}
+Soient $X_1,\dots,X_n$ indépendantes et de même loi, de moyenne $\mu$ et de variance $\sigma^2$, et $\bar X_n=\frac1n\sum_iX_i$. Alors
+$\E[\bar X_n]=\mu$ et $\Var(\bar X_n)=\dfrac{\sigma^2}{n}$.
+\end{proposition}
+\begin{preuve}
+Par linéarité, $\E[\bar X_n]=\frac1n\cdot n\mu=\mu$. Par indépendance (proposition~\ref{prop:indep}), les covariances sont nulles et
+$\Var(\bar X_n)=\frac{1}{n^2}\sum_i\Var(X_i)=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}{n}$.
+\end{preuve}
+
+\begin{theoreme}[Loi des grands nombres, admis]
+\label{thm:lgn}
+Sous les mêmes hypothèses, $\bar X_n$ se rapproche de $\mu$ quand $n$ devient grand : pour tout $\varepsilon>0$, $\P(|\bar X_n-\mu|>\varepsilon)\to0$.
+\end{theoreme}
+
+\begin{theoreme}[Théorème central limite, admis]
+\label{thm:tcl}
+Pour $n$ grand, $\bar X_n$ suit approximativement la loi $\mathcal N\big(\mu,\sigma^2/n\big)$. En particulier,
+$\P\big(|\bar X_n-\mu|\le1{,}96\,\sigma/\sqrt n\big)\approx0{,}95$.
+\end{theoreme}
+
+\begin{aretenir}
+Une moyenne calculée sur $n$ observations se trompe typiquement de $\sigma/\sqrt n$ : pour diviser l'erreur par $2$, il faut $4$ fois plus de données.
+C'est ce qui permet d'estimer l'erreur d'un modèle sur un échantillon test (chapitre~1).
+\end{aretenir}
+
+\subsection*{Exercices}
+
+\begin{exercice}[Variable de Bernoulli]
+\label{ex:bernoulli}
+Soit $X\sim\mathcal B(p)$. Calculer $\E[X]$, $\E[X^2]$ et retrouver $\Var(X)=p(1-p)$. Pour quelle valeur de $p$ la variance est-elle maximale ?
+\end{exercice}
+
+\begin{exercice}[Précision d'un sondage]
+\label{ex:sondage}
+On estime la proportion $p$ de ménages équipés d'un réfrigérateur par la proportion observée sur $n$ ménages.
+En utilisant le théorème central limite et $p(1-p)\le\frac14$, quelle taille $n$ garantit une erreur d'au plus $3$ points avec probabilité $95\,\%$ ?
+\end{exercice}
+
+\begin{exercice}[Meilleure constante]
+\label{ex:meilleureconstante}
+Un dé équilibré donne $Z\in\{1,\dots,6\}$. Calculer $\E[(Z-c)^2]$ pour $c=3$ et pour $c=3{,}5$, et vérifier la proposition~\ref{prop:meilleureconstante}.
+\end{exercice}

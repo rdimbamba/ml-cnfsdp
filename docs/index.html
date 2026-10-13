@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction au Machine Learning · CNFSDP 2026-2027</title>
+<meta name="description" content="Supports du cours Introduction au Machine Learning du CNFSDP (Brazzaville), 2026-2027 : diapositives, polycopié, TP Colab, guide du projet.">
+<style>
+  :root {
+    --vert: #126B2A; --vert-vif: #00A04A; --jaune: #F2E600; --rouge: #D7191F;
+    --encre: #1E1E1E; --gris: #5F6B66; --fond: #FFFFFF; --pale: #EEF5F0; --bord: #D9E3DC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --encre: #ECEFED; --gris: #A9B4AE; --fond: #121614; --pale: #1B2420; --bord: #2C3832; --vert: #4CC37A; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fond); color: var(--encre);
+         font: 16px/1.55 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  .bande { height: 6px; background: linear-gradient(90deg, var(--vert-vif) 0 33.3%, var(--jaune) 33.3% 66.6%, var(--rouge) 66.6%); }
+  main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  header img { height: 64px; background: #fff; padding: 6px; border-radius: 6px; }
+  h1 { color: var(--vert); font-size: 1.9rem; margin: 0; line-height: 1.2; }
+  h2 { color: var(--vert); font-size: 1.25rem; margin: 2rem 0 .6rem; border-bottom: 2px solid var(--bord); padding-bottom: .3rem; }
+  .sous { color: var(--gris); margin: .2rem 0 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--bord); vertical-align: top; }
+  th { color: var(--gris); font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .02em; }
+  a { color: var(--vert); font-weight: 600; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .bouton { display: inline-block; padding: .25rem .6rem; border: 1px solid var(--vert); border-radius: 4px; font-size: .85rem; white-space: nowrap; margin: .1rem .2rem .1rem 0; }
+  .alerte { background: var(--pale); border-left: 4px solid var(--rouge); padding: .8rem 1rem; border-radius: 4px; }
+  .note { color: var(--gris); font-size: .9rem; }
+  .tableau { overflow-x: auto; }
+  footer { margin-top: 2.5rem; color: var(--gris); font-size: .85rem; }
+</style>
+</head>
+<body>
+<div class="bande"></div>
+<main>
+  <header>
+    <img src="logo_cnfsdp.png" alt="Logo du CNFSDP">
+    <div>
+      <h1>Introduction au Machine Learning</h1>
+      <p class="sous">Centre National de Formation en Statistique, Démographie et Planification · Brazzaville<br>
+      Licence 3 · Semestre 5 · UE Informatique IV · 2026-2027<br>
+      Rois Céti DIMBAMBA · Ingénieur statisticien économiste · Actuaire · <a href="https://rdimbamba.shinyapps.io/roisceti_e-cv/">CV en ligne</a></p>
+    </div>
+  </header>
+
+  <h2>Avant le premier cours</h2>
+  <p>Lire le <a href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/poly/chapitre0/chapitre0.pdf">polycopié du chapitre 0</a> et faire le TP0 (installation de Python, VS Code et Git), ou l'ouvrir directement dans
+  <a href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP0.ipynb">Google Colab</a>.</p>
+
+  <h2>Chapitres et TP</h2>
+  <div class="tableau">
+  <table>
+    <thead><tr><th>Chapitre</th><th>Séance</th><th>Supports</th></tr></thead>
+    <tbody>
+      <tr><td>0 · Les outils mathématiques du cours</td><td>chez soi</td>
+        <td><a class="bouton" href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/poly/chapitre0/chapitre0.pdf">Polycopié</a><a class="bouton" href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP0.ipynb">TP0 · Colab</a></td></tr>
+      <tr><td>1 · Fondements du machine learning</td><td>mer. 14 octobre 2026 · 2 h</td>
+        <td><a class="bouton" href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/cours/chapitre1/chapitre1.pdf">Diapositives</a><a class="bouton" href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP1.ipynb">TP1 · Colab</a></td></tr>
+      <tr><td>2 · Apprentissage supervisé : régression</td><td>ven. 16 octobre 2026 · 2 h</td>
+        <td><a class="bouton" href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/cours/chapitre2/chapitre2.pdf">Diapositives</a><a class="bouton" href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP2.ipynb">TP2 · Colab</a></td></tr>
+      <tr><td>3 · Classification et méthodes d'ensemble</td><td>annoncée en salle · 3 h</td>
+        <td><a class="bouton" href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/cours/chapitre3/chapitre3.pdf">Diapositives</a><a class="bouton" href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP3.ipynb">TP3 · Colab</a></td></tr>
+      <tr><td>4 · Apprentissage non supervisé</td><td>annoncée en salle · 3 h</td>
+        <td><a class="bouton" href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/cours/chapitre4/chapitre4.pdf">Diapositives</a><a class="bouton" href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP4.ipynb">TP4 · Colab</a></td></tr>
+      <tr><td>5 · Projet de bout en bout, interprétabilité et éthique</td><td>annoncée en salle · 3 h</td>
+        <td><a class="bouton" href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/cours/chapitre5/chapitre5.pdf">Diapositives</a><a class="bouton" href="https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP5.ipynb">TP5 · Colab</a></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Les corrigés des TP sont publiés <a href="https://github.com/rdimbamba/ml-cnfsdp/tree/main/notebooks/corriges">ici</a> après chaque séance. Dans Colab, enregistrez une copie dans votre Drive pour garder votre travail.</p>
+
+  <h2>Projet de groupe</h2>
+  <p>36 étudiants, 9 groupes de 4, une variante par groupe, sur l'Enquête démographique et de santé du Congo 2011-2012.
+  Remise des rapports et soutenances : <strong>fin novembre 2026</strong>.
+  Tout est dans le <a href="https://github.com/rdimbamba/ml-cnfsdp/blob/main/projet/guide_projet.pdf">guide du projet</a>.</p>
+  <p class="alerte">Les données DHS ne sont jamais déposées sur GitHub ni sur aucun site public. Elles sont remises par l'enseignant après signature de la charte d'utilisation. On rend le code et le rapport, jamais les données.</p>
+
+  <h2>Évaluation</h2>
+  <div class="tableau">
+  <table>
+    <thead><tr><th>Épreuve</th><th>Poids</th></tr></thead>
+    <tbody>
+      <tr><td>Examen sur table (3 h, sans document)</td><td>40 %</td></tr>
+      <tr><td>Projet : rapport de 10 pages et notebook</td><td>40 %</td></tr>
+      <tr><td>Projet : soutenance de 15 minutes</td><td>20 %</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Ressources</h2>
+  <p><a href="https://github.com/rdimbamba/ml-cnfsdp">Dépôt GitHub du cours</a> ·
+     <a href="https://github.com/rdimbamba/ml-cnfsdp/discussions">Questions (Discussions)</a> ·
+     <a href="https://www.statlearning.com/">G. James et al., <em>An Introduction to Statistical Learning</em> (accès libre)</a> ·
+     <a href="https://scikit-learn.org/stable/">Documentation scikit-learn</a></p>
+
+  <footer>© 2026 Rois Céti DIMBAMBA · CNFSDP, Brazzaville, République du Congo</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,250 @@
+% =====================================================================
+%  cnfsdp-poly.sty
+%  Style des polycopiés du cours « Introduction au Machine Learning »
+%  CNFSDP Brazzaville -- L3, S5, 2026-2027 -- Rois Céti DIMBAMBA
+%  Même charte que beamerthemeCNFSDP.sty ; mêmes noms d'environnements.
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cnfsdp-poly}[2026/10/12 Polycopie CNFSDP]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[french]{babel}
+\RequirePackage[a4paper,margin=2.3cm,top=2.6cm,bottom=2.4cm,headheight=14pt]{geometry}
+\RequirePackage{microtype}
+\RequirePackage{amsmath,amssymb,mathtools,bm}
+\RequirePackage{booktabs,array}
+\RequirePackage{enumitem}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{listings}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{csquotes}
+\RequirePackage{xurl}
+\RequirePackage[hidelinks]{hyperref}
+
+\setlist{itemsep=0.25em,topsep=0.4em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% ---------------------------------------------------------------------
+%  Couleurs (identiques au thème beamer)
+% ---------------------------------------------------------------------
+\definecolor{cnfVert}{HTML}{126B2A}
+\definecolor{cnfVertVif}{HTML}{00A04A}
+\definecolor{cnfJaune}{HTML}{F2E600}
+\definecolor{cnfRouge}{HTML}{D7191F}
+\definecolor{cnfTexte}{HTML}{1E1E1E}
+\definecolor{cnfGris}{HTML}{6B6B6B}
+\definecolor{cnfGrisClair}{HTML}{F3F4F2}
+\definecolor{cnfVertPale}{HTML}{EEF6F0}
+\definecolor{cnfJaunePale}{HTML}{FFFBE0}
+\definecolor{cnfRougePale}{HTML}{FCEDED}
+\hypersetup{colorlinks=true,linkcolor=cnfVert,urlcolor=cnfVert,citecolor=cnfVert}
+
+\newcommand{\cnfBande}[2]{%
+  \begin{tikzpicture}
+    \fill[cnfVertVif] (0,0) rectangle ({#1/3},#2);
+    \fill[cnfJaune]   ({#1/3},0) rectangle ({2*#1/3},#2);
+    \fill[cnfRouge]   ({2*#1/3},0) rectangle (#1,#2);
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------------
+%  Informations du cours
+% ---------------------------------------------------------------------
+\newcommand{\cnfCours}{Introduction au Machine Learning}
+\newcommand{\cnfNiveau}{Licence 3 \textperiodcentered{} Semestre 5 \textperiodcentered{} UE Informatique IV}
+\newcommand{\cnfAnnee}{Année académique 2026-2027}
+\newcommand{\cnfEcole}{Centre National de Formation en Statistique, Démographie et Planification}
+\newcommand{\cnfVille}{Brazzaville, République du Congo}
+\newcommand{\cnfAuteur}{Rois Céti DIMBAMBA}
+\newcommand{\cnfTitreAuteur}{Ingénieur statisticien économiste \textperiodcentered{} Actuaire \textperiodcentered{} \href{https://rdimbamba.shinyapps.io/roisceti_e-cv/}{\textcolor{cnfVert}{CV en ligne}}}
+\newcommand{\cnfDepot}{github.com/rdimbamba/ml-cnfsdp}
+\def\cnfChapitreNum{0}
+\def\cnfChapitreTitre{}
+\def\cnfChapitreSousTitre{}
+\def\cnfChapitreDate{?? novembre 2026}
+\newcommand{\chapitre}[3]{\def\cnfChapitreNum{#1}\def\cnfChapitreTitre{#2}\def\cnfChapitreSousTitre{#3}}
+\newcommand{\datechapitre}[1]{\def\cnfChapitreDate{#1}}
+
+% ---------------------------------------------------------------------
+%  Page de titre
+% ---------------------------------------------------------------------
+\newcommand{\pagedetitre}{%
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0] at ([xshift=2.3cm,yshift=-2.0cm]current page.north west)
+      {\includegraphics[height=18mm]{logo_cnfsdp.png}};
+    \node[anchor=north east,align=right,inner sep=0,font=\small\color{cnfGris}]
+      at ([xshift=-2.3cm,yshift=-2.2cm]current page.north east)
+      {Centre National de Formation en Statistique,\\Démographie et Planification\\[0.3ex]\cnfVille};
+    \node[anchor=south west,inner sep=0] at (current page.south west)
+      {\cnfBande{\paperwidth}{3mm}};
+  \end{tikzpicture}\par
+  \vspace*{4.6cm}
+  {\large\color{cnfGris}\cnfCours\par}
+  \vspace{4mm}
+  {\fontsize{26}{30}\selectfont\bfseries\color{cnfVert}Chapitre \cnfChapitreNum\par}
+  \vspace{2mm}
+  {\fontsize{20}{24}\selectfont\bfseries\color{cnfVert}\cnfChapitreTitre\par}
+  \vspace{3mm}
+  {\large\cnfChapitreSousTitre\par}
+  \vspace{5mm}
+  \cnfBande{3.2cm}{1mm}
+  \vspace{1.6cm}
+
+  {\large\bfseries\cnfAuteur\par}
+  {\small\color{cnfGris}\cnfTitreAuteur\par}
+  \vspace{1cm}
+  {\small\cnfNiveau\par}
+  {\small\color{cnfGris}\cnfAnnee\par}
+  \vfill
+  {\small\color{cnfGris}Polycopié \textperiodcentered{} supports, notebooks et TP : \url{https://\cnfDepot}\par}
+  \vspace*{1.2cm}
+  \newpage}
+
+% ---------------------------------------------------------------------
+%  En-têtes et pieds de page
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\small\color{cnfGris}CNFSDP \textendash{} \cnfCours}
+\fancyhead[R]{\small\color{cnfGris}Chapitre \cnfChapitreNum{} \textendash{} \cnfChapitreTitre}
+\fancyfoot[L]{\raisebox{-1.2mm}{\includegraphics[height=5mm]{logo_cnfsdp_embleme.png}}}
+\fancyfoot[R]{\small\bfseries\color{cnfVert}\thepage}
+
+% ---------------------------------------------------------------------
+%  Titres de sections
+% ---------------------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries\color{cnfVert}}
+  {\thesection}{0.8em}{}
+  [\vspace{0.6ex}\cnfBande{2.4cm}{0.7mm}]
+\titleformat{\subsection}
+  {\large\bfseries\color{cnfVert}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{cnfTexte}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.2ex}{1.4ex}
+\titlespacing*{\subsection}{0pt}{1.8ex}{0.8ex}
+
+% ---------------------------------------------------------------------
+%  Environnements (mêmes noms que le beamer) -- numérotation par section
+% ---------------------------------------------------------------------
+\newcounter{enonce}[section]
+\renewcommand{\theenonce}{\thesection.\arabic{enonce}}
+
+\tcbset{
+  cnfbase/.style={enhanced,breakable,boxrule=0pt,arc=0.6mm,
+    left=2.5mm,right=2.5mm,top=1.4mm,bottom=1.4mm,
+    fonttitle=\bfseries,before skip=2.2mm,after skip=2.2mm},
+}
+
+\newtcolorbox{cnf@def}[1]{cnfbase,
+  colback=cnfVertPale,colframe=cnfVert,
+  borderline west={1.2mm}{0pt}{cnfVert},
+  coltitle=cnfVert,colbacktitle=cnfVertPale,
+  attach title to upper={\ \ },title={#1}}
+\newtcolorbox{cnf@hyp}[1]{cnfbase,
+  colback=cnfRougePale,colframe=cnfRouge,
+  borderline west={1.2mm}{0pt}{cnfRouge},
+  coltitle=cnfRouge,colbacktitle=cnfRougePale,
+  attach title to upper={\ \ },title={#1}}
+\newtcolorbox{cnf@fort}[1]{cnfbase,
+  colback=white,colframe=cnfVert,boxrule=0.5pt,
+  colbacktitle=cnfVert,coltitle=white,title={#1}}
+
+\newcommand{\cnf@titre}[2]{#1~\theenonce\if\relax\detokenize{#2}\relax\else{} (#2)\fi}
+
+\newenvironment{definition}[1][]{\refstepcounter{enonce}\begin{cnf@def}{\cnf@titre{Définition}{#1}.}}{\end{cnf@def}}
+\newenvironment{hypothese}[1][]{\refstepcounter{enonce}\begin{cnf@hyp}{\cnf@titre{Hypothèse}{#1}.}}{\end{cnf@hyp}}
+\newenvironment{theoreme}[1][]{\refstepcounter{enonce}\begin{cnf@fort}{\cnf@titre{Théorème}{#1}}}{\end{cnf@fort}}
+\newenvironment{proposition}[1][]{\refstepcounter{enonce}\begin{cnf@fort}{\cnf@titre{Proposition}{#1}}}{\end{cnf@fort}}
+\newenvironment{lemme}[1][]{\refstepcounter{enonce}\begin{cnf@fort}{\cnf@titre{Lemme}{#1}}}{\end{cnf@fort}}
+\newenvironment{corollaire}[1][]{\refstepcounter{enonce}\begin{cnf@fort}{\cnf@titre{Corollaire}{#1}}}{\end{cnf@fort}}
+
+\newtcolorbox{preuve}[1][]{cnfbase,
+  colback=white,colframe=white,
+  borderline west={0.6mm}{0pt}{cnfGris},left=3.5mm,
+  before upper={{\itshape\color{cnfGris}Preuve\if\relax\detokenize{#1}\relax\else{} #1\fi.}\ },
+  after upper={\hfill$\square$}}
+
+\newtcolorbox{remarque}[1][Remarque]{cnfbase,
+  colback=cnfJaunePale,colframe=cnfJaune,
+  borderline west={1.2mm}{0pt}{cnfJaune!85!black},
+  attach title to upper={\ \ },coltitle=cnfTexte,colbacktitle=cnfJaunePale,
+  title={#1.}}
+\newenvironment{exemple}{\begin{remarque}[Exemple]}{\end{remarque}}
+
+\newtcolorbox{objectifs}{cnfbase,colback=cnfGrisClair,colframe=cnfGrisClair,
+  title={Objectifs du chapitre},coltitle=cnfVert,colbacktitle=cnfGrisClair}
+\newtcolorbox{aretenir}{cnfbase,colback=cnfVertPale,colframe=cnfVert,boxrule=0.5pt,
+  title={À retenir},coltitle=white,colbacktitle=cnfVert}
+\newtcolorbox{tp}[2]{cnfbase,colback=white,colframe=cnfRouge,boxrule=0.5pt,
+  colbacktitle=cnfRouge,coltitle=white,
+  title={#1 \hfill {\normalfont\small #2}}}
+
+% Exercices et corrigés
+\newcounter{exercice}
+\newtcolorbox{cnf@exo}[1]{cnfbase,colback=white,colframe=cnfGris!50,boxrule=0.4pt,
+  colbacktitle=cnfGrisClair,coltitle=cnfVert,title={#1}}
+\newenvironment{exercice}[1][]{\refstepcounter{exercice}\begin{cnf@exo}{Exercice~\theexercice\if\relax\detokenize{#1}\relax\else{} (#1)\fi}}{\end{cnf@exo}}
+\newtcolorbox{corrige}{cnfbase,colback=cnfGrisClair,colframe=cnfGrisClair,
+  before upper={{\bfseries\color{cnfVert}Corrigé.}\ }}
+
+% ---------------------------------------------------------------------
+%  Code Python
+% ---------------------------------------------------------------------
+\lstdefinestyle{cnfpython}{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{cnfVert}\bfseries,
+  stringstyle=\color{cnfRouge!85!black},
+  commentstyle=\color{cnfGris}\itshape,
+  numberstyle=\tiny\color{cnfGris},
+  numbers=left,numbersep=7pt,xleftmargin=14pt,
+  backgroundcolor=\color{cnfGrisClair},
+  frame=none,showstringspaces=false,breaklines=true,
+  columns=fullflexible,keepspaces=true,
+  aboveskip=1.2ex,belowskip=1.2ex,
+  morekeywords={as,with,None,True,False},
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ù}{{\`u}}1 {ç}{{\c{c}}}1
+           {ê}{{\^e}}1 {â}{{\^a}}1 {ô}{{\^o}}1 {î}{{\^i}}1 {É}{{\'E}}1
+           {σ}{{$\sigma$}}1 {θ}{{$\theta$}}1 {±}{{$\pm$}}1 {²}{{$^2$}}1 {≈}{{$\approx$}}1 {λ}{{$\lambda$}}1
+           {Λ}{{$\Lambda$}}1 {≤}{{$\le$}}1 {≥}{{$\ge$}}1 {β}{{$\beta$}}1 {⟂}{{$\perp$}}1 {η}{{$\eta$}}1 {«}{{\guillemotleft}}1 {»}{{\guillemotright}}1
+}
+\lstnewenvironment{python}[1][]{\lstset{style=cnfpython,#1}}{}
+\lstdefinestyle{cnfbash}{basicstyle=\ttfamily\small,backgroundcolor=\color{cnfGrisClair},breaklines=true,postbreak=\mbox{\textcolor{cnfGris}{$\hookrightarrow$}\space},
+  frame=none,columns=fullflexible,keepspaces=true,xleftmargin=6pt,
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1}
+\lstnewenvironment{terminal}{\lstset{style=cnfbash}}{}
+
+% ---------------------------------------------------------------------
+%  Macros mathématiques (identiques au beamer)
+% ---------------------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Dn}{\mathcal{D}_n}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\Rn}{\widehat{R}_n}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rg}{rg}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\ps}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\cond}{\,\middle|\,}
+\newcommand{\T}{^{\top}}
+\newcommand{\iid}{\overset{\text{i.i.d.}}{\sim}}
+
+\endinput

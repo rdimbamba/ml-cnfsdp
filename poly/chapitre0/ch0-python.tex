@@ -1,0 +1,70 @@
+\section{En Python}
+\label{sec:python}
+
+Chaque outil de ce chapitre se vérifie en quelques lignes de NumPy. Les sorties indiquées en commentaire sont celles obtenues ; ces programmes sont regroupés dans le notebook \texttt{TP0.ipynb}.
+
+\subsection{Matrice de covariance et valeurs propres}
+\begin{python}
+import numpy as np
+
+# Matrice de covariance et valeurs propres (sections 1)
+X = np.array([[1, 2], [2, 2], [3, 5]])        # 3 individus, 2 variables
+Xc = X - X.mean(axis=0)                        # tableau centré
+S = Xc.T @ Xc / len(X)                         # covariance empirique
+print(S.round(3))                              # [[0.667 1.] [1. 2.]]
+lam, U = np.linalg.eigh(S)                     # valeurs propres croissantes
+print(lam.round(4))                            # [0.1315 2.5352]
+print(U[:, -1].round(3))                       # premier axe de l'ACP
+\end{python}
+On retrouve la matrice $S$ de l'exemple de la section~\ref{sec:algebre}. Le vecteur propre de la plus grande valeur propre donne la direction de plus grande dispersion des trois points : c'est le premier axe de l'ACP.
+
+\subsection{Droite des moindres carrés et descente de gradient}
+\begin{python}
+import numpy as np
+
+# Droite des moindres carrés (section 2)
+x = np.array([1, 2, 3]); y = np.array([2, 2, 5])
+b = np.mean((x - x.mean()) * (y - y.mean())) / np.var(x)   # s_xy / s_x²
+a = y.mean() - b * x.mean()
+print(a, b)                                    # 0.0 1.5
+print(np.polyfit(x, y, deg=1).round(4))        # [1.5 0.] : même droite
+
+# Descente de gradient sur L(θ) = (θ - 3)²
+theta, eta = 0.0, 0.25
+for k in range(6):
+    theta = theta - eta * 2 * (theta - 3)
+    print(round(theta, 4), end=" ")            # 1.5 2.25 2.625 2.8125 ...
+\end{python}
+Les formules de la proposition~\ref{prop:droite} donnent la même droite que \texttt{np.polyfit}, et la descente de gradient s'approche de $3$ comme prévu par la proposition~\ref{prop:gd}.
+
+\subsection{Loi des grands nombres et théorème central limite}
+\begin{python}
+import numpy as np
+rng = np.random.default_rng(2)
+
+# Loi des grands nombres et TCL (section 3)
+p, n, R = 0.3, 400, 20_000                     # R sondages de n personnes
+props = rng.binomial(n, p, size=R) / n         # R proportions observées
+print(props.mean().round(4), props.var().round(6), p * (1 - p) / n)
+ecart = 1.96 * np.sqrt(p * (1 - p) / n)
+print(np.mean(np.abs(props - p) <= ecart).round(3))   # proche de 0.95
+\end{python}
+La variance des proportions observées vaut bien $p(1-p)/n$, et l'écart à $p$ reste sous $1{,}96\sqrt{p(1-p)/n}$ dans environ $95\,\%$ des sondages simulés ($94{,}3\,\%$ ici).
+
+\subsection{Moyennes conditionnelles}
+\begin{python}
+import numpy as np, pandas as pd
+rng = np.random.default_rng(3)
+
+# Moyennes conditionnelles par groupe (section 4)
+n = 10_000
+milieu = rng.choice(["urbain", "rural"], size=n, p=[0.4, 0.6])
+enfants = np.where(milieu == "urbain", rng.poisson(2.5, n), rng.poisson(4.5, n))
+df = pd.DataFrame({"milieu": milieu, "enfants": enfants})
+
+print(df.groupby("milieu")["enfants"].mean().round(2))   # ≈ 4.5 et 2.5
+part = df["milieu"].value_counts(normalize=True)
+moy = df.groupby("milieu")["enfants"].mean()
+print(round((part * moy).sum(), 4), round(df["enfants"].mean(), 4))  # espérance totale
+\end{python}
+Les moyennes par groupe estiment $\E[Y\mid X=x]$, et leur moyenne pondérée redonne la moyenne générale (proposition~\ref{prop:tour}).

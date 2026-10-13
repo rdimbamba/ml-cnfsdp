@@ -1,0 +1,79 @@
+\section{Probabilités conditionnelles}
+\label{sec:conditionnement}
+
+Prédire $Y$ à partir de $X$, c'est raisonner « sachant $X$ ». Cette section donne les deux outils du chapitre~1 : la formule de Bayes et la moyenne conditionnelle.
+
+\subsection{Probabilité conditionnelle et formule de Bayes}
+
+\begin{definition}[Probabilité conditionnelle]
+Pour deux événements $A$ et $B$ avec $\P(B)>0$, la probabilité de $A$ \emph{sachant} $B$ est $\P(A\mid B)=\dfrac{\P(A\text{ et }B)}{\P(B)}$.
+\end{definition}
+
+\begin{proposition}[Probabilités totales et formule de Bayes]
+\label{prop:bayes}
+Si $B_1,\dots,B_K$ forment une partition (un et un seul se produit), de probabilités non nulles :
+\[
+  \P(A)=\sum_{k=1}^K\P(A\mid B_k)\,\P(B_k)
+  \qquad\text{et}\qquad
+  \P(B_j\mid A)=\frac{\P(A\mid B_j)\,\P(B_j)}{\sum_k\P(A\mid B_k)\,\P(B_k)} .
+\]
+\end{proposition}
+\begin{preuve}
+$A$ est la réunion des événements disjoints « $A$ et $B_k$ », de probabilités $\P(A\mid B_k)\P(B_k)$ : on additionne.
+Puis $\P(B_j\mid A)=\P(A\text{ et }B_j)/\P(A)$, et l'on remplace $\P(A)$ par la première formule.
+\end{preuve}
+
+\begin{exemple}[Test de dépistage]
+Une maladie touche $1\,\%$ d'une population. Un test est positif chez $95\,\%$ des malades et négatif chez $90\,\%$ des non-malades. Pour une personne testée positive :
+\[
+  \P(M\mid+)=\frac{0{,}95\times0{,}01}{0{,}95\times0{,}01+0{,}10\times0{,}99}=\frac{0{,}0095}{0{,}1085}\approx0{,}088 .
+\]
+Moins de $9\,\%$ des positifs sont malades : la rareté de la maladie pèse lourd. C'est le raisonnement du classifieur de Bayes (chapitre~1).
+\end{exemple}
+
+\subsection{Moyenne conditionnelle}
+
+\begin{definition}[Loi et espérance conditionnelles, cas discret]
+Si $X$ et $Y$ sont discrètes et $\P(X=x)>0$, la \emph{loi de $Y$ sachant $X=x$} est donnée par les probabilités $\P(Y=y\mid X=x)$, et
+\[
+  \E[Y\mid X=x]=\sum_yy\;\P(Y=y\mid X=x)
+\]
+est la \emph{moyenne de $Y$ sachant $X=x$} : la moyenne de $Y$ dans le groupe des individus pour lesquels $X=x$.
+\end{definition}
+
+Quand $Y$ ne prend que les valeurs $0$ et $1$, $\E[Y\mid X=x]=\P(Y=1\mid X=x)$ : une moyenne de $0$ et de $1$ est une proportion.
+Le cas continu se définit de la même façon avec des densités ; nous l'admettrons.
+
+\begin{proposition}[Formule de l'espérance totale]
+\label{prop:tour}
+$\E[Y]=\sum_x\E[Y\mid X=x]\;\P(X=x)$ : la moyenne générale est la moyenne pondérée des moyennes de groupes.
+\end{proposition}
+\begin{preuve}
+$\sum_x\E[Y\mid X=x]\P(X=x)=\sum_x\sum_yy\,\P(Y=y\mid X=x)\P(X=x)=\sum_y y\sum_x\P(Y=y,X=x)=\sum_yy\,\P(Y=y)=\E[Y]$.
+\end{preuve}
+
+\begin{exemple}
+Parmi les femmes d'une région, $40\,\%$ vivent en ville, où la moyenne est de $2{,}5$ enfants, et $60\,\%$ en milieu rural, avec $4{,}5$ enfants en moyenne.
+La moyenne régionale est $0{,}4\times2{,}5+0{,}6\times4{,}5=3{,}7$ enfants.
+Pour prédire le nombre d'enfants d'une femme dont on connaît le milieu, on utilisera $2{,}5$ ou $4{,}5$ plutôt que $3{,}7$ (chapitre~1).
+\end{exemple}
+
+\subsection*{Exercices}
+
+\begin{exercice}[Prévalence et dépistage]
+\label{ex:prevalence}
+Reprendre le test de dépistage avec une prévalence de $10\,\%$. Que devient $\P(M\mid+)$ ? Commenter.
+\end{exercice}
+
+\begin{exercice}[Moyennes conditionnelles]
+\label{ex:tableau}
+Le couple $(X,Y)$ a la loi suivante.
+\begin{center}
+\begin{tabular}{c|ccc}
+ & $Y=0$ & $Y=1$ & $Y=2$ \\ \hline
+$X=0$ & $0{,}2$ & $0{,}1$ & $0{,}1$ \\
+$X=1$ & $0{,}1$ & $0{,}2$ & $0{,}3$
+\end{tabular}
+\end{center}
+Calculer $\E[Y\mid X=0]$ et $\E[Y\mid X=1]$, puis vérifier la formule de l'espérance totale.
+\end{exercice}

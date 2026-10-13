@@ -1,0 +1,14 @@
+# Environnement du cours : conda env create -f environment.yml, puis conda activate ml-cnfsdp
+name: ml-cnfsdp
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - jupyter
+  - ipykernel
+  - pyreadstat

@@ -1,0 +1,43 @@
+% =====================================================================
+%  Chapitre 0 -- Les outils mathématiques du cours
+%  Introduction au Machine Learning -- CNFSDP -- L3 S5 -- 2026-2027
+%  Version niveau licence (12/10/2026)
+%  Compilation : pdflatex chapitre0.tex (deux fois)
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage{cnfsdp-poly}
+
+\chapitre{0}{Les outils mathématiques du cours}
+         {Matrices, minimisation, probabilités, conditionnement, estimation}
+
+\begin{document}
+\pagedetitre
+
+\begin{objectifs}
+Ce chapitre n'a pas de séance : il se lit chez soi, crayon en main, avant le chapitre~1.
+Il rassemble \emph{uniquement} les outils mathématiques utilisés dans les chapitres 1 à 5, avec pour chacun l'endroit où il sert.
+\begin{itemize}
+  \item Vecteurs et matrices : tableau de données, matrice de covariance, valeurs propres (chapitres 2 et 4).
+  \item Minimiser une fonction : dérivée, gradient, descente de gradient (chapitres 1 à 3).
+  \item Probabilités : espérance, variance, loi normale, loi des grands nombres (chapitre 1).
+  \item Probabilités conditionnelles : formule de Bayes, moyenne conditionnelle (chapitres 1 et 3).
+  \item Estimation : biais, variance, intervalle de confiance, maximum de vraisemblance (chapitres 1 à 3).
+  \item Outils informatiques : installation de Python, VS Code, Git (TP0).
+\end{itemize}
+Chaque section se termine par des exercices ; les corrigés sont regroupés à la fin du chapitre.
+\end{objectifs}
+
+\tableofcontents
+\newpage
+
+\input{ch0-notations}
+\input{ch0-algebre}
+\input{ch0-optimisation}
+\input{ch0-probabilites}
+\input{ch0-conditionnement}
+\input{ch0-statistique}
+\input{ch0-python}
+\input{ch0-tp}
+\input{ch0-corriges}
+
+\end{document}

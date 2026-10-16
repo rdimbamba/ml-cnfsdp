@@ -48,6 +48,9 @@
 
 \newtcolorbox{modele}[1]{cnfbase,colback=white,colframe=cnfVert,boxrule=0.6pt,
   title={#1},coltitle=white,colbacktitle=cnfVert,fonttitle=\bfseries\small}
+\newtcolorbox{fiche}[1]{cnfbase,colback=white,colframe=cnfVert,boxrule=0.6pt,
+  title={#1},coltitle=white,colbacktitle=cnfVert,fonttitle=\bfseries\small,
+  fontupper=\small,before upper={\raggedright}}
 
 \begin{document}
 \pagedetitre
@@ -61,8 +64,14 @@ Ce guide accompagne le chapitre~5 (projet de bout en bout). Il rassemble ce qu'i
 \begin{itemize}
   \item \textbf{Groupes} : $36$ étudiants, $9$ groupes de $4$ ; une variante différente par groupe, attribuée en salle.
   \item \textbf{Données} : Enquête démographique et de santé du Congo 2011-2012 (EDS, programme DHS), fichiers originaux.
-  \item \textbf{Travail demandé} : une question de prédiction (chapitres~1 à~3), une analyse non supervisée (ACP, typologie, chapitre~4), un audit d'équité et une discussion des limites (chapitre~5).
-  \item \textbf{Livrables} : un rapport de $10$ pages et un notebook ; une soutenance de $15$ minutes où chacun des quatre membres présente une partie.
+  \item \textbf{Travail demandé} : sur un même thème, une question de prédiction (chapitres~1 à~3) et une analyse non supervisée des mêmes données (ACP ou typologie, chapitre~4), suivies d'une courte discussion des limites.
+  \item \textbf{Livrables} : un rapport de $10$ pages et un notebook ; une soutenance de $15$ minutes où chacun des quatre membres présente une partie. Répartition indicative des $10$ pages :
+  \begin{itemize}
+    \item introduction, données et préparation (question, population, construction de la cible, valeurs manquantes) : environ $2$ pages ;
+    \item prédiction (chapitres~1 à~3 : au moins trois modèles comparés, validation croisée, métriques adaptées) : environ $4{,}5$ pages ;
+    \item analyse non supervisée (ACP ou typologie, chapitre~4) : environ $2{,}5$ pages ;
+    \item conclusion et limites : environ $1$ page.
+  \end{itemize}
   \item \textbf{Calendrier} : remise du rapport et soutenances \textbf{fin novembre 2026}, deux à trois semaines après le chapitre~5 ; dates exactes annoncées en salle.
   \item \textbf{Évaluation du cours} : examen sur table $40\,\%$, rapport et notebook $40\,\%$, soutenance $20\,\%$.
 \end{itemize}
@@ -85,7 +94,93 @@ Ce guide accompagne le chapitre~5 (projet de bout en bout). Il rassemble ce qu'i
     \bottomrule
   \end{tabular}
 \end{center}
-{\small\color{cnfGris}Codes à vérifier dans le dictionnaire de l'enquête (par exemple, exclure les codes $\ge9996$ de \texttt{hw70} et \texttt{hw71}). Les groupes 1 et 2 prédisent la pauvreté avec des variables qui ne servent pas à construire l'indice (taille du ménage, chef de ménage, région).}
+{\small\color{cnfGris}Codes à vérifier dans le dictionnaire de l'enquête (par exemple, exclure les codes $\ge9996$ de \texttt{hw70} et \texttt{hw71}). Les groupes 1 et 2 prédisent la pauvreté avec des variables qui ne servent pas à construire l'indice (taille du ménage, chef de ménage, région). Chaque sujet est détaillé dans une fiche de démarrage (section~\ref{sec:fiches}).}
+
+\section{Fiches de démarrage}
+\label{sec:fiches}
+
+Chaque fiche donne le fichier et la population à retenir, la définition exacte de la cible, des variables explicatives suggérées, les variables à écarter (fuites d'information : variables qui contiennent déjà la réponse), un taux de contrôle et une piste pour le volet non supervisé. \textbf{Le taux de contrôle} est la proportion pondérée de la cible calculée sur le fichier (poids \texttt{v005}/$10^6$, ou \texttt{hv005}/$10^6$ pour les ménages) ; votre cible, une fois construite, doit le retrouver à quelques dixièmes de point près, et il est à rapprocher du rapport final de l'EDSC-II 2011-2012. Les listes de variables sont des points de départ, à compléter après lecture du dictionnaire.
+
+\begin{fiche}{Groupe 1 \textendash{} Richesse : indice national}
+\textbf{Fichier, population} : \texttt{HR}, tous les ménages ($11\,632$).\\
+\textbf{Cible} : \texttt{pauvre} $=1$ si \texttt{hv270} $\in\{1,2\}$ (deux quintiles les plus bas), $0$ sinon.\\
+\textbf{Explicatives suggérées} : taille du ménage \texttt{hv009}, enfants de moins de $5$ ans \texttt{hv014}, femmes et hommes éligibles \texttt{hv010}, \texttt{hv011}, sexe et âge du chef \texttt{hv219}, \texttt{hv220}, milieu \texttt{hv025}, région \texttt{hv024} ; facultatif : instruction du chef (fichier \texttt{PR}, \texttt{hv106} de la ligne \texttt{hv218}).\\
+\textbf{À écarter} : biens et logement (\texttt{hv201} à \texttt{hv215}, \texttt{hv221}, \texttt{hv226}, \texttt{hv243*}, \texttt{hv246*}, \texttt{hv247}), \texttt{hv271}.\\
+\textbf{Taux de contrôle} : $40{,}8\,\%$ des ménages ($39{,}7\,\%$ de la population, $40\,\%$ par construction).\\
+\textbf{Non supervisé} : ACP nationale sur les biens et le logement ; le premier axe fournit un indice, à comparer à \texttt{hv271} (corrélation) et aux quintiles \texttt{hv270}.
+\end{fiche}
+
+\begin{fiche}{Groupe 2 \textendash{} Richesse : indices urbain et rural}
+\textbf{Fichier, population} : \texttt{HR}, ménages urbains ($3\,150$) et ruraux ($8\,482$), traités séparément.\\
+\textbf{Cible} : comme le groupe 1 (\texttt{hv270} $\in\{1,2\}$).\\
+\textbf{Explicatives suggérées} : celles du groupe 1 ; comparer un modèle unique avec \texttt{hv025} et deux modèles séparés.\\
+\textbf{À écarter} : comme le groupe 1.\\
+\textbf{Taux de contrôle} : $13{,}9\,\%$ de la population urbaine et $86{,}5\,\%$ de la population rurale appartiennent aux $40\,\%$ les plus pauvres.\\
+\textbf{Non supervisé} : deux ACP, l'une sur les ménages urbains, l'autre sur les ruraux ; comparer les variables qui portent le premier axe dans chaque milieu, puis le classement des ménages avec l'indice national \texttt{hv271}.
+\end{fiche}
+
+\begin{fiche}{Groupe 3 \textendash{} Vaccination complète}
+\textbf{Fichier, population} : \texttt{KR}, enfants vivants (\texttt{b5} $=1$) âgés de $12$ à $23$ mois (âge en mois $=$ \texttt{v008} $-$ \texttt{b3}) : $1\,884$ enfants.\\
+\textbf{Cible} : $1$ si \texttt{h2} (BCG), \texttt{h3}, \texttt{h5}, \texttt{h7} (DTC~1 à~3), \texttt{h4}, \texttt{h6}, \texttt{h8} (polio~1 à~3) et \texttt{h9} (rougeole) valent tous $1$, $2$ ou $3$ (vaccin reçu, sur carte ou déclaré).\\
+\textbf{Explicatives suggérées} : sexe \texttt{b4}, rang de naissance \texttt{bord}, âge de la mère \texttt{v012}, instruction \texttt{v106}, quintile \texttt{v190}, milieu \texttt{v025}, région \texttt{v024}, visites prénatales \texttt{m14}, lieu d'accouchement \texttt{m15}, exposition aux médias \texttt{v157} à \texttt{v159}, taille du ménage \texttt{v136}.\\
+\textbf{À écarter} : toutes les variables de vaccination \texttt{h0} à \texttt{h10} et la carte de vaccination \texttt{h1}.\\
+\textbf{Taux de contrôle} : $38{,}1\,\%$.\\
+\textbf{Non supervisé} : typologie (k-means ou CAH) des enfants et de leurs mères sur les variables explicatives, puis taux de vaccination complète par classe.
+\end{fiche}
+
+\begin{fiche}{Groupe 4 \textendash{} Abandon entre DTC1 et DTC3}
+\textbf{Fichier, population} : \texttt{KR}, enfants vivants de $12$ à $23$ mois ayant reçu le DTC1 (\texttt{h3} $\in\{1,2,3\}$) : $1\,290$ enfants.\\
+\textbf{Cible} : $1$ si le DTC3 n'a pas été reçu (\texttt{h7} $\notin\{1,2,3\}$).\\
+\textbf{Explicatives suggérées} : celles du groupe 3.\\
+\textbf{À écarter} : comme le groupe 3.\\
+\textbf{Taux de contrôle} : $25{,}0\,\%$ d'abandon (DTC1 : $74{,}5\,\%$ ; DTC3 : $56{,}3\,\%$ des $12$--$23$ mois).\\
+\textbf{Non supervisé} : typologie des enfants ayant commencé le calendrier vaccinal ; taux d'abandon par classe.
+\end{fiche}
+
+\begin{fiche}{Groupe 5 \textendash{} Vaccination contre la rougeole}
+\textbf{Fichier, population} : \texttt{KR}, enfants vivants de $12$ à $23$ mois : $1\,884$ enfants.\\
+\textbf{Cible} : $1$ si \texttt{h9} $\in\{1,2,3\}$.\\
+\textbf{Explicatives suggérées} : celles du groupe 3 ; l'âge exact de l'enfant en mois compte ici (vaccin administré vers $9$ mois).\\
+\textbf{À écarter} : comme le groupe 3 (les autres vaccins sont très liés à la cible).\\
+\textbf{Taux de contrôle} : $74{,}9\,\%$.\\
+\textbf{Non supervisé} : ACP des caractéristiques de la mère et du ménage ; positionner les enfants non vaccinés sur le premier plan factoriel.
+\end{fiche}
+
+\begin{fiche}{Groupe 6 \textendash{} Retard de croissance}
+\textbf{Fichier, population} : \texttt{KR}, enfants vivants mesurés, \texttt{hw70} $<9996$ : $4\,475$ enfants.\\
+\textbf{Cible} : $1$ si \texttt{hw70} $<-200$ (score taille-pour-âge inférieur à $-2$ écarts-types).\\
+\textbf{Explicatives suggérées} : âge en mois \texttt{hw1}, sexe \texttt{b4}, rang \texttt{bord}, intervalle avec la naissance précédente \texttt{b11}, taille à la naissance perçue \texttt{m18}, taille et IMC de la mère \texttt{v438}, \texttt{v445} (codes spéciaux à exclure), instruction \texttt{v106}, quintile \texttt{v190}, milieu \texttt{v025}, région \texttt{v024}, diarrhée récente \texttt{h11}, eau \texttt{v113}, toilettes \texttt{v116}.\\
+\textbf{À écarter} : les autres indices anthropométriques \texttt{hw71}, \texttt{hw72}, et le poids et la taille de l'enfant \texttt{hw2}, \texttt{hw3} (ils servent à calculer la cible).\\
+\textbf{Taux de contrôle} : $23{,}1\,\%$.\\
+\textbf{Non supervisé} : ACP des caractéristiques de l'enfant, de la mère et du ménage ; lecture du premier plan et position des enfants en retard de croissance.
+\end{fiche}
+
+\begin{fiche}{Groupe 7 \textendash{} Insuffisance pondérale}
+\textbf{Fichier, population} : \texttt{KR}, enfants vivants mesurés, \texttt{hw71} $<9996$ : $4\,475$ enfants.\\
+\textbf{Cible} : $1$ si \texttt{hw71} $<-200$ (score poids-pour-âge inférieur à $-2$ écarts-types).\\
+\textbf{Explicatives suggérées} : celles du groupe 6.\\
+\textbf{À écarter} : \texttt{hw70}, \texttt{hw72}, \texttt{hw2}, \texttt{hw3}.\\
+\textbf{Taux de contrôle} : $11{,}1\,\%$.\\
+\textbf{Non supervisé} : typologie (k-means ou CAH) des couples mère--enfant ; taux d'insuffisance pondérale par classe.
+\end{fiche}
+
+\begin{fiche}{Groupe 8 \textendash{} Contraception moderne}
+\textbf{Fichier, population} : \texttt{IR}, femmes actuellement en union (\texttt{v502} $=1$) : $6\,750$ femmes.\\
+\textbf{Cible} : $1$ si \texttt{v313} $=3$ (méthode moderne).\\
+\textbf{Explicatives suggérées} : âge \texttt{v012}, instruction \texttt{v106}, quintile \texttt{v190}, milieu \texttt{v025}, région \texttt{v024}, enfants nés vivants \texttt{v201}, enfants vivants \texttt{v218}, religion \texttt{v130}, exposition aux médias \texttt{v157} à \texttt{v159}, travail \texttt{v714}, âge à la première union \texttt{v511}, décision sur sa propre santé \texttt{v743a}.\\
+\textbf{À écarter} : méthode utilisée et utilisation passée ou prévue (\texttt{v312}, \texttt{v361} à \texttt{v364}), besoins non satisfaits \texttt{v626a}.\\
+\textbf{Taux de contrôle} : $20{,}0\,\%$.\\
+\textbf{Non supervisé} : typologie des femmes en union sur les variables explicatives ; taux de contraception moderne par classe.
+\end{fiche}
+
+\begin{fiche}{Groupe 9 \textendash{} Besoins non satisfaits en contraception}
+\textbf{Fichier, population} : \texttt{IR}, femmes actuellement en union : $6\,750$ femmes.\\
+\textbf{Cible} : $1$ si \texttt{v626a} $\in\{1,2\}$ (besoin non satisfait pour espacer ou pour limiter).\\
+\textbf{Explicatives suggérées} : celles du groupe 8.\\
+\textbf{À écarter} : les composantes de l'indicateur, \texttt{v312}, \texttt{v313}, \texttt{v364}, désir d'enfants \texttt{v602}, \texttt{v605}, grossesse actuelle \texttt{v213}, aménorrhée et abstinence \texttt{v405}, \texttt{v406}.\\
+\textbf{Taux de contrôle} : $18{,}4\,\%$.\\
+\textbf{Non supervisé} : ACP des caractéristiques des femmes ; position des femmes ayant un besoin non satisfait sur le premier plan factoriel.
+\end{fiche}
 
 \section{Accès aux données pour le cours : l'autorisation de classe}
 

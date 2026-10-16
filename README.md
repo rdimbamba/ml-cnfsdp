@@ -32,7 +32,7 @@ Ce dépôt rassemble tous les supports du cours : diapositives, polycopié des o
 | 5 · Projet de bout en bout, interprétabilité et éthique | [PDF](cours/chapitre5/chapitre5.pdf) | [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP5.ipynb) |
 | Projet de groupe | [Guide du projet (PDF)](projet/guide_projet.pdf) | — |
 
-Les corrigés des TP sont publiés dans [`notebooks/corriges/`](notebooks/corriges/) après chaque séance.
+Les corrigés des TP sont dans [`notebooks/corriges/`](notebooks/corriges/).
 
 ## Démarrer
 
@@ -59,7 +59,7 @@ ml-cnfsdp/
 ├── cours/chapitre1 … chapitre5   diapositives : PDF, sources LaTeX, figures, thème CNFSDP
 ├── poly/chapitre0                polycopié des outils mathématiques (PDF et sources)
 ├── notebooks/                    TP0 à TP5, versions à compléter
-│   └── corriges/                 corrigés exécutés, publiés après chaque séance
+│   └── corriges/                 corrigés exécutés des TP
 ├── projet/                       guide du projet de groupe, modèle de demande DHS
 ├── code/                         scripts des figures et des notebooks
 ├── docs/                         site du cours (GitHub Pages)

@@ -1,12 +1,12 @@
 # Corrigés des TP
 
-Le corrigé exécuté de chaque TP est publié ici **après la séance** correspondante.
+Le corrigé exécuté de chaque TP. Dans Colab, enregistrez une copie dans votre Drive pour garder votre travail.
 
 | TP | Chapitre | Corrigé |
 |---|---|---|
-| TP0 | 0 · Outils mathématiques et installation | publié avant le chapitre 1 |
-| TP1 | 1 · Fondements | après la séance du 14 octobre 2026 |
-| TP2 | 2 · Régression | après la séance du 16 octobre 2026 |
-| TP3 | 3 · Classification et méthodes d'ensemble | après la séance |
-| TP4 | 4 · Apprentissage non supervisé | après la séance |
-| TP5 | 5 · Projet de bout en bout | après la séance |
+| TP0 | 0 · Outils mathématiques et installation | [TP0_corrige.ipynb](TP0_corrige.ipynb) |
+| TP1 | 1 · Fondements | [TP1_corrige.ipynb](TP1_corrige.ipynb) |
+| TP2 | 2 · Régression | [TP2_corrige.ipynb](TP2_corrige.ipynb) |
+| TP3 | 3 · Classification et méthodes d'ensemble | [TP3_corrige.ipynb](TP3_corrige.ipynb) |
+| TP4 | 4 · Apprentissage non supervisé | [TP4_corrige.ipynb](TP4_corrige.ipynb) |
+| TP5 | 5 · Projet de bout en bout | [TP5_corrige.ipynb](TP5_corrige.ipynb) |

@@ -17,7 +17,7 @@
 \subtitle{Plus proches voisins, régression logistique, arbres, forêts et boosting}
 \author{Rois Céti DIMBAMBA}
 \institute{Ingénieur statisticien économiste \textperiodcentered{} Actuaire \textperiodcentered{} \href{https://rdimbamba.shinyapps.io/roisceti_e-cv/}{\textcolor{cnfVert}{CV en ligne}}}
-\date{?? octobre 2026}
+\date{20 octobre 2026}
 
 \begin{document}
 
@@ -189,7 +189,7 @@
   \begin{proposition}[admise]
     La perte logistique moyenne est une fonction convexe de $\theta$ : elle a un seul minimum, sans formule explicite. Son gradient vaut
     \[
-      \frac{\partial}{\partial\theta_j}\Big(\frac1n\sum_i\ell\Big)=\frac1n\sum_{i=1}^n\big(\eta_\theta(x_i)-y_i\big)\,x_{ij}\qquad(x_{i0}=1).
+      \frac{\partial}{\partial\theta_j}\Big(\frac1n\sum_{i=1}^n\ell\big(\eta_\theta(x_i),y_i\big)\Big)=\frac1n\sum_{i=1}^n\big(\eta_\theta(x_i)-y_i\big)\,x_{ij}\qquad(x_{i0}=1).
     \]
   \end{proposition}
   {\small\color{cnfGris}On le calcule par descente de gradient (chapitre~0). Le gradient est « erreur de probabilité $\times$ variable », comme pour les moindres carrés.}

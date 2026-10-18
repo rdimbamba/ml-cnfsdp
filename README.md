@@ -15,9 +15,9 @@ Ce dépôt rassemble tous les supports du cours : diapositives, polycopié des o
 | Chapitre 0 · Outils mathématiques et installation (TP0) | à lire et faire chez soi avant le chapitre 1 | — |
 | Chapitre 1 · Fondements | mercredi 14 octobre 2026 | 2 h |
 | Chapitre 2 · Régression | vendredi 16 octobre 2026 | 2 h |
-| Chapitre 3 · Classification et méthodes d'ensemble | annoncée en salle | 3 h |
-| Chapitre 4 · Apprentissage non supervisé | annoncée en salle | 3 h |
-| Chapitre 5 · Projet de bout en bout, interprétabilité et éthique | annoncée en salle | 3 h |
+| Chapitre 3 · Classification et méthodes d'ensemble | mardi 20 octobre 2026 | 3 h |
+| Chapitre 4 · Apprentissage non supervisé | jeudi 22 octobre 2026 | 3 h |
+| Chapitre 5 · Projet de bout en bout, interprétabilité et éthique | samedi 24 octobre 2026 | 3 h |
 | Remise des rapports et soutenances du projet | fin novembre 2026 | — |
 
 ## Supports

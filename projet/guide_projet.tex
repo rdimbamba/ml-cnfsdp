@@ -7,7 +7,7 @@
 \usepackage{cnfsdp-poly}
 
 \chapitre{}{Guide du projet de groupe}
-         {Organisation, accès aux données DHS, charte d'utilisation}
+         {Organisation, données DHS, fiches de démarrage, charte d'utilisation}
 
 % Page de titre et en-tête propres à ce guide (pas de numéro de chapitre)
 \makeatletter
@@ -28,7 +28,7 @@
   \vspace{4mm}
   {\fontsize{24}{29}\selectfont\bfseries\color{cnfVert}Guide du projet de groupe\par}
   \vspace{3mm}
-  {\large Organisation, accès aux données DHS, charte d'utilisation\par}
+  {\large Organisation, données DHS, fiches de démarrage et charte d'utilisation\par}
   \vspace{5mm}
   \cnfBande{3.2cm}{1mm}
   \vspace{1.6cm}
@@ -52,137 +52,447 @@
   title={#1},coltitle=white,colbacktitle=cnfVert,fonttitle=\bfseries\small,
   fontupper=\small,before upper={\raggedright}}
 
+
 \begin{document}
 \pagedetitre
 
+
 \begin{objectifs}
-Ce guide accompagne le chapitre~5 (projet de bout en bout). Il rassemble ce qu'il faut pour démarrer le projet : la répartition des groupes, le calendrier, l'accès aux données DHS par l'autorisation de classe, la charte d'utilisation à signer, et, pour plus tard, la procédure pour obtenir les données en son nom.
+Ce guide accompagne le chapitre~5 (projet de bout en bout). Il contient tout ce qu'il faut pour mener le projet : l'organisation et le calendrier (section~\ref{sec:organisation}), la description des fichiers de l'enquête, de leur dictionnaire et des pondérations (section~\ref{sec:donnees}), la démarche attendue pour les volets supervisé et non supervisé (section~\ref{sec:demarche}), une fiche détaillée par groupe avec son code Python de préparation (section~\ref{sec:fiches}), puis les règles d'accès aux données et la charte à signer (section~\ref{sec:acces}).
+
+Deux notebooks accompagnent ce guide dans le dossier \texttt{notebooks/} du dépôt : \texttt{Validation\_croisee.ipynb} (les hyperparamètres de chaque modèle du cours et leur choix par validation croisée) et \texttt{Projets\_demarrage.ipynb} (le code de préparation des neuf groupes, à lancer sur les fichiers reçus).
 \end{objectifs}
 
+% =====================================================================
 \section{Organisation}
+\label{sec:organisation}
 
 \begin{itemize}
-  \item \textbf{Groupes} : $36$ étudiants, $9$ groupes de $4$ ; une variante différente par groupe, attribuée en salle.
-  \item \textbf{Données} : Enquête démographique et de santé du Congo 2011-2012 (EDS, programme DHS), fichiers originaux.
-  \item \textbf{Travail demandé} : sur un même thème, une question de prédiction (chapitres~1 à~3) et une analyse non supervisée des mêmes données (ACP ou typologie, chapitre~4), suivies d'une courte discussion des limites.
+  \item \textbf{Groupes} : $36$ étudiants, $9$ groupes de $4$ constitués par l'enseignant (tirage au sort, avec un équilibre entre étudiantes et étudiants) ; un thème différent par groupe, attribué par l'enseignant. Chaque groupe désigne un responsable, interlocuteur de l'enseignant.
+  \item \textbf{Données} : Enquête démographique et de santé du Congo 2011-2012 (EDSC-II, programme DHS), fichiers originaux.
+  \item \textbf{Travail demandé} : sur un même thème, une question de prédiction (chapitres~1 à~3) et une analyse non supervisée des mêmes données (ACP et typologie, chapitre~4), suivies d'une courte discussion des limites.
   \item \textbf{Livrables} : un rapport de $10$ pages et un notebook ; une soutenance de $15$ minutes où chacun des quatre membres présente une partie. Répartition indicative des $10$ pages :
   \begin{itemize}
-    \item introduction, données et préparation (question, population, construction de la cible, valeurs manquantes) : environ $2$ pages ;
-    \item prédiction (chapitres~1 à~3 : au moins trois modèles comparés, validation croisée, métriques adaptées) : environ $4{,}5$ pages ;
-    \item analyse non supervisée (ACP ou typologie, chapitre~4) : environ $2{,}5$ pages ;
+    \item introduction, données et préparation (question, population, construction de la cible, valeurs manquantes, taux de contrôle) : environ $2$ pages ;
+    \item prédiction (au moins trois modèles comparés, hyperparamètres choisis par validation croisée, métriques adaptées, interprétation) : environ $4{,}5$ pages ;
+    \item analyse non supervisée (ACP, typologie, lien avec la cible) : environ $2{,}5$ pages ;
     \item conclusion et limites : environ $1$ page.
   \end{itemize}
-  \item \textbf{Calendrier} : remise du rapport et soutenances \textbf{fin novembre 2026}, deux à trois semaines après le chapitre~5 ; dates exactes annoncées en salle.
-  \item \textbf{Évaluation du cours} : examen sur table $40\,\%$, rapport et notebook $40\,\%$, soutenance $20\,\%$.
+  \item \textbf{Calendrier} : remise du rapport et du notebook le \textbf{dimanche 22 novembre 2026} ; soutenances le \textbf{samedi 28 novembre 2026}.
+  \item \textbf{Évaluation du cours} : rapport et notebook $60\,\%$, soutenance $20\,\%$, note individuelle de participation $20\,\%$ (interventions pendant les cours et les TP). Il n'y a pas d'examen écrit.
 \end{itemize}
 
 \begin{center}
-  \small\renewcommand{\arraystretch}{1.15}\setlength\tabcolsep{4pt}
-  \begin{tabular}{cllp{0.36\textwidth}p{0.24\textwidth}}
+  \footnotesize\renewcommand{\arraystretch}{1.15}\setlength\tabcolsep{4pt}
+  \begin{tabular}{clc>{\raggedright\arraybackslash}p{0.4\textwidth}>{\raggedright\arraybackslash}p{0.19\textwidth}}
     \toprule
-    \textbf{gr.} & \textbf{thème} & \textbf{fichier} & \textbf{cible à prédire} & \textbf{variante} \\
+    \textbf{gr.} & \textbf{thème} & \textbf{fichier} & \textbf{cible à prédire} & \textbf{population} \\
     \midrule
-    1 & richesse & \texttt{HR} & ménage dans les 40\,\% les plus pauvres & indice national (ACP), comparé à \texttt{hv271} \\
-    2 & richesse & \texttt{HR} & ménage dans les 40\,\% les plus pauvres & indices urbain et rural séparés \\
-    3 & vaccination & \texttt{KR} & vaccination complète (\texttt{h2} à \texttt{h9}) & enfants de 12 à 23 mois \\
-    4 & vaccination & \texttt{KR} & abandon : DTC1 reçu, DTC3 non & enfants de 12 à 23 mois \\
-    5 & vaccination & \texttt{KR} & rougeole (\texttt{h9}) & enfants de 12 à 23 mois \\
-    6 & nutrition & \texttt{KR} & retard de croissance (\texttt{hw70} $<-200$) & enfants de moins de 5 ans \\
-    7 & nutrition & \texttt{KR} & insuffisance pondérale (\texttt{hw71} $<-200$) & enfants de moins de 5 ans \\
-    8 & femme & \texttt{IR} & contraception moderne (\texttt{v313} $=3$) & femmes en union \\
-    9 & femme & \texttt{IR} & besoins non satisfaits en contraception & femmes en union \\
+    1 & richesse : indice national & \texttt{HR} & ménage dans les 40\,\% les plus pauvres (\texttt{hv270} $\in\{1,2\}$) & tous les ménages \\
+    2 & richesse : urbain et rural & \texttt{HR} & idem, un modèle par milieu (\texttt{hv025}) & ménages urbains, ruraux \\
+    3 & vaccination complète & \texttt{KR} & 8 vaccins reçus (\texttt{h2} à \texttt{h9} $\in\{1,2,3\}$) & enfants de 12 à 23 mois \\
+    4 & abandon DTC1 $\to$ DTC3 & \texttt{KR} & DTC1 reçu (\texttt{h3} $\in\{1,2,3\}$), DTC3 non (\texttt{h7} $\notin\{1,2,3\}$) & 12-23 mois ayant eu le DTC1 \\
+    5 & rougeole & \texttt{KR} & vaccin reçu (\texttt{h9} $\in\{1,2,3\}$) & enfants de 12 à 23 mois \\
+    6 & retard de croissance & \texttt{KR} & \texttt{hw70} $<-200$ & enfants mesurés \\
+    7 & insuffisance pondérale & \texttt{KR} & \texttt{hw71} $<-200$ & enfants mesurés \\
+    8 & contraception moderne & \texttt{IR} & \texttt{v313} $=3$ & femmes en union \\
+    9 & besoins non satisfaits & \texttt{IR} & \texttt{v626a} $\in\{1,2\}$ & femmes en union \\
     \bottomrule
   \end{tabular}
 \end{center}
-{\small\color{cnfGris}Codes à vérifier dans le dictionnaire de l'enquête (par exemple, exclure les codes $\ge9996$ de \texttt{hw70} et \texttt{hw71}). Les groupes 1 et 2 prédisent la pauvreté avec des variables qui ne servent pas à construire l'indice (taille du ménage, chef de ménage, région). Chaque sujet est détaillé dans une fiche de démarrage (section~\ref{sec:fiches}).}
 
+\ifdefined\versionclasse
+\begin{center}
+  \footnotesize\renewcommand{\arraystretch}{1.12}\setlength\tabcolsep{4pt}
+  \begin{tabular}{c>{\raggedright\arraybackslash}p{0.86\textwidth}}
+    \toprule
+    \textbf{gr.} & \textbf{membres (tirage au sort du 20 octobre 2026)} \\
+    \midrule
+    1 & HONDLO MOUKOKO Guède Cathérin \textperiodcentered{} ILENGUE Evra Mechack \textperiodcentered{} KONABEKA Sefora Gloire Oméga \textperiodcentered{} NGOKO Grace Madai \\
+    2 & BAKALA-MAKITA Junior Noel \textperiodcentered{} ELEMDJONG-BIONG Francina-Deziana \textperiodcentered{} MVOUEZOLO Gabriel \textperiodcentered{} OSSOMBO OBOUEMBE Dedslove \\
+    3 & DIAMONEKA-MIENANZAMBI Bien-Aimé \textperiodcentered{} MAKOSSO Dukaine-Jiclau \textperiodcentered{} MANKITA Dominique Prescilia \textperiodcentered{} NZOMONO Macaire Justice \\
+    4 & EWOUMBA NGANGA Francis \textperiodcentered{} GALAKO-DEPET Lumière \textperiodcentered{} GANKOUE PALLAMON Christ Thesal \textperiodcentered{} MABIALA DEDE Exaucé \\
+    5 & ABALE Emmanuel \textperiodcentered{} DZIHILI-NTSO Darsina \textperiodcentered{} MABELE-NGONDO Hauldy Karmel \textperiodcentered{} OKANDZA Emile Junior \\
+    6 & BOTILA DIABANGOUAYA Yvonnecia \textperiodcentered{} ILONGO NGOUMA Pi Houlda \textperiodcentered{} MOUNGUELA Grace Miguel \textperiodcentered{} TCHITEMBO Stanislas Richvy Stiven \\
+    7 & ENGONDZO Servais Dieuveille \textperiodcentered{} NZABAKANI-BOUKAMBOU Chardin \textperiodcentered{} OBOUROU OKANA Max Fresnel \textperiodcentered{} TSANGOU-POUNA Berge Excée \\
+    8 & ENGOUMBA Darcy \textperiodcentered{} LOUHAMOU Rebecca Alexia Blandelle \textperiodcentered{} MOUSSOULINDA BANZOUZI Dropsy \textperiodcentered{} TCHITEMBO KUQUEL Yanys Kevin \\
+    9 & BOKOTE MAGANGA Exaucé Benjamin \textperiodcentered{} BOUA-NGOMA Paul Césaire \textperiodcentered{} MOUNTALI Salomon \textperiodcentered{} NGOULOUBI Opportune \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+\else
+{\small\color{cnfGris}La composition des groupes est communiquée aux étudiants par courriel ; elle ne figure pas dans la version publique de ce guide.}
+\fi
+
+% =====================================================================
+\section{Les données de l'enquête}
+\label{sec:donnees}
+
+\subsection{Quatre fichiers, quatre niveaux d'observation}
+
+L'EDSC-II a interrogé $11\,632$ ménages tirés au sort dans tout le pays, toutes les femmes de $15$ à $49$ ans de ces ménages, et a recueilli l'historique de leurs naissances. Les données sont livrées en quatre fichiers « recode », un par niveau d'observation : une ligne du tableau est un ménage, une personne, une femme ou un enfant selon le fichier.
+
+\begin{center}
+  \small\renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{l>{\raggedright\arraybackslash}p{0.3\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}l}
+    \toprule
+    \textbf{archive} & \textbf{une ligne $=$} & \textbf{identifiant} & \textbf{groupes} \\
+    \midrule
+    \texttt{CGHR61DT.zip} & un ménage & \texttt{hhid} & 1, 2 \\
+    \texttt{CGPR61DT.zip} & un membre d'un ménage & \texttt{hhid} $+$ \texttt{hvidx} (numéro de ligne) & 1, 2 (facultatif) \\
+    \texttt{CGIR61DT.zip} & une femme de 15 à 49 ans enquêtée & \texttt{caseid} & 8, 9 \\
+    \texttt{CGKR61DT.zip} & un enfant né dans les 5 ans avant l'enquête & \texttt{caseid} $+$ \texttt{midx} & 3 à 7 \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+Les noms de variables suivent une convention commune à toutes les EDS du monde : \texttt{hv\dots} pour les variables du ménage, \texttt{v\dots} pour la femme, \texttt{b\dots} pour l'historique des naissances, \texttt{m\dots} pour la grossesse et l'accouchement, \texttt{h\dots} pour la santé de l'enfant (vaccins, diarrhée), \texttt{hw\dots} pour l'anthropométrie de l'enfant. Dans le fichier \texttt{KR}, chaque enfant porte aussi toutes les variables de sa mère (\texttt{v\dots}) : une mère de deux enfants apparaît sur deux lignes.
+
+\subsection{Les six fichiers de chaque archive}
+
+Chaque archive contient six fichiers de même nom, avec six extensions. Le préfixe se lit ainsi : \texttt{CG} (Congo), \texttt{KR} (type de fichier), \texttt{6} (phase 6 du programme DHS), \texttt{1} (version).
+
+\begin{center}
+  \small\renewcommand{\arraystretch}{1.22}\setlength\tabcolsep{4pt}
+  \begin{tabular}{l>{\raggedright\arraybackslash}p{0.53\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}}
+    \toprule
+    \textbf{fichier} & \textbf{contenu et usage} & \textbf{ouvrir avec} \\
+    \midrule
+    \texttt{.DTA} & \textbf{Les données}, au format Stata : une ligne par unité, une colonne par variable. Il contient aussi les libellés (en anglais) des variables et de leurs modalités. C'est le seul fichier à lire pour l'analyse. & Python (\texttt{pandas.read\_stata}), R (\texttt{haven::read\_dta}), Stata (\texttt{use}), SPSS (Fichier, Ouvrir, Données, type Stata) \\
+    \texttt{.MAP} & \textbf{Le dictionnaire complet} (voir ci-dessous) : toutes les variables, dans l'ordre du questionnaire, avec leur libellé et la liste de leurs codes. & éditeur de texte (Bloc-notes, Notepad++, VS Code) ou Python \\
+    \texttt{.FRQ} & \textbf{Tableaux de fréquences} de chaque variable : effectif de chaque code, sans pondération. Sert à vérifier sa lecture : vos effectifs doivent être identiques. & éditeur de texte \\
+    \texttt{.FRW} & Les mêmes tableaux de fréquences, \textbf{pondérés} (le W de \emph{weighted} ; l'en-tête du fichier le précise). Sert à vérifier un pourcentage pondéré. & éditeur de texte \\
+    \texttt{.DO} & Programme Stata qui attache les libellés aux variables et aux codes (\texttt{label variable}, \texttt{label define}). Utile seulement sous Stata ; lisible comme un texte. & Stata ou éditeur de texte \\
+    \texttt{.DCT} & Dictionnaire Stata au format \og infile \fg{} : position et longueur de chaque variable dans la version texte brut des données. Inutile ici, le \texttt{.DTA} étant déjà prêt. & éditeur de texte \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+Excel n'ouvre pas les \texttt{.DTA}. Si un fichier texte affiche des caractères étranges, le rouvrir avec l'encodage \og Western (Windows 1252) \fg{} ou \og Latin-1 \fg{}.
+
+\subsection{Le dictionnaire des variables}
+
+Le fichier \texttt{.MAP} est la référence pour choisir et coder ses variables. Pour chaque variable, il donne son nom (en majuscules dans le \texttt{.MAP}, en minuscules dans le \texttt{.DTA} : \texttt{H9} devient \texttt{h9}), son libellé en anglais, sa position et sa longueur dans le fichier texte brut (sans intérêt pour vous), puis, pour une variable codée, la liste des codes et de leur signification. Quelques repères :
+\begin{itemize}
+  \item les libellés sont en anglais : DTC s'écrit \emph{DPT}, rougeole \emph{MEASLES}, quintile de richesse \emph{wealth index} ;
+  \item une variable marquée \og NA \fg{} n'a pas été collectée au Congo : elle est vide ;
+  \item les codes de non-réponse sont listés avec les autres : il faut les repérer avant tout calcul (paragraphe~\ref{sec:codes}) ;
+  \item dans l'archive \texttt{IR} seulement, un fichier \texttt{.DOC} décrit les particularités de l'enquête congolaise (variables ajoutées ou non collectées).
+\end{itemize}
+
+Le dictionnaire se consulte aussi en Python, de deux façons : par les libellés enregistrés dans le \texttt{.DTA}, ou en cherchant dans le texte du \texttt{.MAP}.
+\begin{python}
+import pandas as pd
+fichier = "donnees/CGKR61FL.DTA"                 # nom exact à lire dans votre dossier
+with pd.io.stata.StataReader(fichier) as lecteur:
+    libelles = lecteur.variable_labels()         # {nom : libellé}
+    codes = lecteur.value_labels()               # {nom de la liste : {code : libellé}}
+print(libelles["h9"])                            # libellé d'une variable
+print({k: v for k, v in libelles.items() if "MEASLES" in v.upper()})   # recherche
+
+import re
+texte = open("donnees/CGKR61FL.MAP", encoding="latin-1").read()        # le .MAP
+debut = re.search(r"^H9\s", texte, flags=re.MULTILINE).start()        # ligne de H9
+print(texte[debut:debut + 600])                  # la variable et ses codes
+\end{python}
+
+\subsection{Lire un fichier en Python}
+
+On ne lit que les colonnes utiles (le fichier \texttt{KR} en compte plus de $1\,000$) et l'on garde les codes numériques, que l'on interprète avec le dictionnaire :
+\begin{python}
+df = pd.read_stata("donnees/CGKR61FL.DTA", columns=["v005", "b5", "h9"],
+                   convert_categoricals=False)
+\end{python}
+La fonction \texttt{lire\_dhs} du bloc commun (paragraphe~\ref{sec:bloc}) fait cela pour vous et trouve seule le fichier dans le dossier \texttt{donnees/}. Travaillez de préférence sur votre ordinateur (VS Code ou Jupyter). Avec Google Colab, téléversez les fichiers dans la session (ils disparaissent à sa fermeture), jamais dans un dossier partagé.
+
+\subsection{Les pondérations}
+\label{sec:poids}
+
+\textbf{Pourquoi des poids ?} L'EDS ne tire pas tous les ménages avec la même probabilité. L'échantillon est stratifié par département et par milieu, et tiré en deux degrés : des grappes (zones de dénombrement), puis des ménages dans chaque grappe. Certaines strates sont volontairement sur-représentées pour avoir assez d'observations, et la non-réponse varie d'une zone à l'autre. Chaque unité enquêtée reçoit donc un \textbf{poids de sondage} : l'inverse de sa probabilité d'être enquêtée, corrigé de la non-réponse, puis normalisé pour que la somme des poids égale le nombre d'unités enquêtées. Un ménage de poids $2$ \og représente \fg{} deux fois plus de ménages de la population qu'un ménage de poids $1$.
+
+\textbf{Où sont-ils ?} Les poids sont stockés multipliés par $10^6$ (six décimales implicites) : on divise toujours par $1\,000\,000$.
+\begin{center}
+  \small\renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{fichier} & \textbf{poids à utiliser} & \textbf{remarque} \\
+    \midrule
+    \texttt{HR} (ménages) & \texttt{hv005} / $10^6$ & part des ménages \\
+    \texttt{HR}, part de la population & \texttt{hv005} / $10^6$ $\times$ \texttt{hv012} & \texttt{hv012} : nombre de membres (de droit) du ménage \\
+    \texttt{PR} (membres) & \texttt{hv005} / $10^6$ & le poids du ménage \\
+    \texttt{IR} (femmes) & \texttt{v005} / $10^6$ & poids de la femme \\
+    \texttt{KR} (enfants) & \texttt{v005} / $10^6$ & poids de la mère, porté par l'enfant \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\textbf{La proportion pondérée.} Dans une population de $n$ unités de poids $w_i$, la proportion pondérée de la cible $y_i\in\{0,1\}$ est
+\[
+  \hat p=\frac{\sum_{i=1}^n w_i\,y_i}{\sum_{i=1}^n w_i}.
+\]
+Exemple : trois enfants, $y=(1,0,1)$ et $w=(0{,}5\,;\,2\,;\,1{,}5)$ : $\hat p=(0{,}5+1{,}5)/4=50\,\%$, alors que la proportion brute vaut $2/3\approx66{,}7\,\%$. En Python : \texttt{np.average(y, weights=w)}.
+
+\textbf{Quand pondérer ?}
+\begin{itemize}
+  \item \textbf{Toujours} pour un chiffre qui décrit la population congolaise : taux de contrôle, taux de la cible par classe ou par région, comparaison avec le rapport officiel de l'EDSC-II. Sans poids, un taux national est biaisé (les strates sur-représentées pèsent trop).
+  \item \textbf{Pas obligatoire} pour apprendre et évaluer un modèle de prédiction : le modèle apprend le lien entre $x$ et $y$, que la sur-représentation d'une strate ne fausse pas si la région et le milieu figurent parmi les variables explicatives. Il est possible de pondérer l'apprentissage (\texttt{fit(X, y, sample\_weight=w)}) ; dites dans le rapport ce que vous avez fait.
+\end{itemize}
+Les \textbf{taux de contrôle} des fiches (section~\ref{sec:fiches}) sont des proportions pondérées, calculées avec le poids indiqué dans chaque fiche. Votre cible, une fois construite, doit les retrouver à quelques dixièmes de point près : c'est la preuve que la population et la cible sont bien construites.
+
+\subsection{Codes spéciaux et valeurs manquantes}
+\label{sec:codes}
+
+Avant tout calcul, repérer dans le \texttt{.MAP} les codes qui ne sont pas de vraies valeurs, et les remplacer par une valeur manquante (\texttt{NaN}) :
+\begin{itemize}
+  \item \textbf{ne sait pas} : souvent \texttt{8}, \texttt{98} ou \texttt{998} ; \textbf{manquant} : \texttt{9}, \texttt{99} ou \texttt{999} ;
+  \item \textbf{anthropométrie} (\texttt{hw70}, \texttt{hw71}, \texttt{hw72}) : \texttt{9996} taille hors limites, \texttt{9997} âge hors limites, \texttt{9998} mesure incohérente, \texttt{9999} manquant ; seules les valeurs inférieures à $9996$ sont des scores ;
+  \item \textbf{non concerné} : une case vide (\texttt{NaN} dans Python) signale une question non posée, par exemple \texttt{m14} (visites prénatales), posée seulement pour la dernière naissance, ou \texttt{b11} (intervalle avec la naissance précédente), vide pour un premier-né ;
+  \item \textbf{échelles} : certaines variables sont multipliées par $10$ ou $100$ (\texttt{hw70} : score $\times100$ ; \texttt{v438} : taille en millimètres ; \texttt{v445} : IMC $\times100$).
+\end{itemize}
+Un code de non-réponse laissé tel quel fausse tout : un âge \og 98 \fg{} ou une taille \og 9999 \fg{} tire les moyennes et les modèles.
+
+% =====================================================================
+\section{La démarche attendue}
+\label{sec:demarche}
+
+\subsection{Le volet supervisé}
+
+\begin{enumerate}
+  \item \textbf{Construire la population et la cible} avec le code de votre fiche, puis \textbf{retrouver le taux de contrôle}. Décrire la cible (taux pondéré, par milieu et par région).
+  \item \textbf{Séparer} apprentissage et test avant toute autre étape (\texttt{train\_test\_split}, $20$ à $25\,\%$ pour le test, \texttt{stratify=y}, \texttt{random\_state} fixé).
+  \item \textbf{Assembler un pipeline} : imputation des valeurs manquantes (\texttt{SimpleImputer}, médiane), standardisation pour la régression logistique et les $k$ plus proches voisins, puis le modèle. Tout ce qui apprend sur les données (imputation, standardisation) se fait dans le pipeline, pour éviter les fuites (chapitre~5).
+  \item \textbf{Comparer au moins trois modèles} au classifieur de référence (\texttt{DummyClassifier}) : régression logistique, arbre, forêt aléatoire, gradient boosting, $k$ plus proches voisins. Choisir les \textbf{hyperparamètres par validation croisée} stratifiée à $5$ plis sur l'échantillon d'apprentissage seulement : le notebook \texttt{Validation\_croisee.ipynb} donne, pour chaque modèle, les hyperparamètres à régler et le code.
+  \item \textbf{Choisir des métriques adaptées} : les classes sont déséquilibrées (de $11$ à $75\,\%$ de positifs selon les groupes) ; on rapporte l'AUC, le rappel, la précision et le score $F_1$, pas seulement l'exactitude, et l'on discute le seuil de décision.
+  \item \textbf{Évaluer une seule fois sur le test} le modèle retenu, puis \textbf{l'interpréter} : importance des variables par permutation, sens des effets (coefficients, dépendance partielle).
+  \item \textbf{Discuter les limites} : données de 2011-2012, association et non causalité, variables écartées, qualité des déclarations.
+\end{enumerate}
+{\small\color{cnfGris}Fichier \texttt{KR} : les enfants d'une même mère se ressemblent. Pour une évaluation plus honnête, on peut garder tous les enfants d'une mère dans le même pli (\texttt{GroupKFold} avec \texttt{groups=caseid}, présenté dans le notebook de validation croisée).}
+
+\subsection{Le volet non supervisé, pas à pas}
+
+\begin{aretenir}
+\textbf{L'idée.} Le volet non supervisé décrit la structure des données \emph{sans regarder la cible} : quelles variables vont ensemble (ACP), quels profils d'individus se dégagent (typologie). La cible n'intervient qu'à la fin, comme \textbf{variable illustrative} : on regarde comment elle se répartit sur les axes et dans les classes. Les variables qui construisent les axes et les classes sont les \textbf{variables actives}.
+\end{aretenir}
+
+\begin{enumerate}
+  \item \textbf{Choisir les variables actives} : celles de votre fiche, toutes numériques (les variables à modalités ordonnées, comme l'instruction de $0$ à $3$, sont gardées comme des nombres ; les autres sont transformées en indicatrices $0/1$). Garder les lignes complètes.
+  \item \textbf{ACP normée} (\texttt{StandardScaler} puis \texttt{PCA}) : on standardise pour que chaque variable compte autant, quelle que soit son unité. Tracer l'éboulis des parts d'inertie et garder les $q$ premiers axes (avant le \og coude \fg{}, ou $70$ à $80\,\%$ d'inertie cumulée).
+  \item \textbf{Nommer les axes} à partir des corrélations entre variables actives et axes : un axe où l'instruction, la richesse et l'exposition aux médias sont fortement corrélées dans le même sens est un axe de \og niveau socio-économique \fg{}.
+  \item \textbf{Projeter les individus} sur le premier plan, colorés selon la cible : les individus positifs sont-ils concentrés d'un côté d'un axe ?
+  \item \textbf{Typologie} : classification ascendante hiérarchique (CAH, méthode de Ward) sur les coordonnées des $q$ premiers axes ; choisir le nombre de classes $k$ sur le dendrogramme (un grand saut de hauteur) ; puis \textbf{consolider} par $k$-means en partant des centres des classes de la CAH : chaque individu rejoint le centre le plus proche, ce qui améliore l'homogénéité des classes.
+  \item \textbf{Décrire et nommer les classes} : effectif, moyenne de chaque variable active par classe (comparée à la moyenne générale), puis taux pondéré de la cible par classe. Donner un nom à chaque classe (\og mères jeunes, instruites, urbaines \fg{}\dots).
+\end{enumerate}
+Dans le rapport, on montre : l'éboulis et le choix de $q$, le tableau des corrélations et le nom des axes, le premier plan coloré par la cible, le dendrogramme et le choix de $k$, le profil des classes avec le taux de la cible par classe. On termine par le lien avec le volet supervisé : les variables qui séparent le mieux les classes sont-elles aussi les plus importantes dans le meilleur modèle ?
+
+Le code ci-dessous réalise ces six étapes ; il est le même pour tous les groupes et se lance après le code de préparation de la fiche, qui fournit le tableau \texttt{Z} des variables actives et le tableau \texttt{illus} (cible et poids).
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/non_supervise.py}
+
+\subsection{Le bloc commun}
+\label{sec:bloc}
+
+À exécuter une seule fois, en tête du notebook, avant le code de votre groupe. Il définit la lecture des fichiers, le traitement des codes spéciaux, la proportion pondérée et la construction des bases prêtes à l'emploi : \texttt{X} (variables explicatives, une indicatrice par modalité des variables catégorielles, la modalité \og manquant \fg{} comprise), \texttt{y} (cible), \texttt{w} (poids) pour le supervisé ; \texttt{Z} (variables actives) et \texttt{illus} (cible et poids) pour le non supervisé. Les valeurs manquantes restantes des variables numériques de \texttt{X} sont imputées dans le pipeline.
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/bloc_commun.py}
+
+% =====================================================================
 \section{Fiches de démarrage}
 \label{sec:fiches}
 
-Chaque fiche donne le fichier et la population à retenir, la définition exacte de la cible, des variables explicatives suggérées, les variables à écarter (fuites d'information : variables qui contiennent déjà la réponse), un taux de contrôle et une piste pour le volet non supervisé. \textbf{Le taux de contrôle} est la proportion pondérée de la cible calculée sur le fichier (poids \texttt{v005}/$10^6$, ou \texttt{hv005}/$10^6$ pour les ménages) ; votre cible, une fois construite, doit le retrouver à quelques dixièmes de point près, et il est à rapprocher du rapport final de l'EDSC-II 2011-2012. Les listes de variables sont des points de départ, à compléter après lecture du dictionnaire.
+Chaque fiche donne la question à traiter, la population (qui garder, et comment), la construction pas à pas de la cible, des variables explicatives suggérées avec leur codage, les variables à écarter (fuites d'information : variables qui contiennent déjà la réponse ou qui servent à la construire), le taux de contrôle avec son poids, et le volet non supervisé. Les listes de variables sont des points de départ : on peut en ajouter après lecture du dictionnaire, en justifiant le choix.
 
+Le code de préparation suit chaque fiche. Il se lance après le bloc commun (paragraphe~\ref{sec:bloc}), affiche le taux de contrôle, puis fournit les bases prêtes à l'emploi : \texttt{X}, \texttt{y}, \texttt{w} pour le supervisé, \texttt{Z} et \texttt{illus} pour le non supervisé (à passer ensuite au code du volet non supervisé). Les mêmes codes sont regroupés dans le notebook \texttt{Projets\_demarrage.ipynb}.
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 1 \textendash{} Richesse : indice national}
-\textbf{Fichier, population} : \texttt{HR}, tous les ménages ($11\,632$).\\
-\textbf{Cible} : \texttt{pauvre} $=1$ si \texttt{hv270} $\in\{1,2\}$ (deux quintiles les plus bas), $0$ sinon.\\
-\textbf{Explicatives suggérées} : taille du ménage \texttt{hv009}, enfants de moins de $5$ ans \texttt{hv014}, femmes et hommes éligibles \texttt{hv010}, \texttt{hv011}, sexe et âge du chef \texttt{hv219}, \texttt{hv220}, milieu \texttt{hv025}, région \texttt{hv024} ; facultatif : instruction du chef (fichier \texttt{PR}, \texttt{hv106} de la ligne \texttt{hv218}).\\
-\textbf{À écarter} : biens et logement (\texttt{hv201} à \texttt{hv215}, \texttt{hv221}, \texttt{hv226}, \texttt{hv243*}, \texttt{hv246*}, \texttt{hv247}), \texttt{hv271}.\\
-\textbf{Taux de contrôle} : $40{,}8\,\%$ des ménages ($39{,}7\,\%$ de la population, $40\,\%$ par construction).\\
-\textbf{Non supervisé} : ACP nationale sur les biens et le logement ; le premier axe fournit un indice, à comparer à \texttt{hv271} (corrélation) et aux quintiles \texttt{hv270}.
-\end{fiche}
+\textbf{Question.} Peut-on repérer les ménages pauvres à partir de caractéristiques simples à recueillir (taille et composition du ménage, chef de ménage, région), sans observer leurs biens ? C'est la question du ciblage rapide d'un programme social.
 
+\textbf{Population.} Tous les ménages du fichier \texttt{HR} : $11\,632$ lignes, une par ménage. Poids : \texttt{hv005}/$10^6$.
+
+\textbf{Cible.} \texttt{hv270} est le quintile de l'indice de richesse national (de $1$ : les $20\,\%$ les plus pauvres, à $5$ : les plus riches). On pose \texttt{pauvre} $=1$ si \texttt{hv270} $\in\{1,2\}$ (les deux quintiles les plus bas, soit les $40\,\%$ les plus pauvres), $0$ sinon. Les quintiles sont définis sur la population : la part de ménages pauvres n'est donc pas exactement $40\,\%$.
+
+\textbf{Explicatives suggérées.}
+\begin{itemize}
+  \item taille du ménage \texttt{hv009} ; enfants de moins de $5$ ans \texttt{hv014} ; femmes de $15$-$49$ ans \texttt{hv010} et hommes éligibles \texttt{hv011} ;
+  \item sexe du chef \texttt{hv219} ($1$ homme, $2$ femme) ; âge du chef \texttt{hv220} (codes $98$, $99$ : manquant) ;
+  \item instruction du chef \texttt{instr\_chef} : variable \texttt{hv106} du fichier \texttt{PR} pour la personne dont le lien avec le chef \texttt{hv101} vaut $1$ ($0$ aucune, $1$ primaire, $2$ secondaire, $3$ supérieur ; $8$ : manquant) ;
+  \item département \texttt{hv024}, milieu \texttt{hv025} ($1$ urbain, $2$ rural).
+\end{itemize}
+
+\textbf{À écarter.} Tous les biens et toutes les caractéristiques du logement (\texttt{hv201} à \texttt{hv247}) : ils servent à calculer l'indice, donc la cible. Le score \texttt{hv271} et les quintiles \texttt{hv270}.
+
+\textbf{Taux de contrôle.} $40{,}8\,\%$ des ménages (poids \texttt{hv005}/$10^6$) et $39{,}7\,\%$ de la population (poids \texttt{hv005}/$10^6$ $\times$ \texttt{hv012}).
+
+\textbf{Non supervisé : reconstruire soi-même un indice de richesse.} Variables actives : les biens possédés ($0/1$ : électricité \texttt{hv206}, radio \texttt{hv207}, télévision \texttt{hv208}, réfrigérateur \texttt{hv209}, vélo \texttt{hv210}, moto \texttt{hv211}, voiture \texttt{hv212}, téléphone fixe \texttt{hv221}, portable \texttt{hv243a}, montre \texttt{hv243b}, terre agricole \texttt{hv244}, bétail \texttt{hv246}, compte bancaire \texttt{hv247}) et le logement (eau améliorée, toilettes améliorées, sol, murs et toit en matériau fini, cuisine à l'électricité ou au gaz, personnes par pièce). L'ACP normée donne un premier axe où presque toutes les variables sont corrélées dans le même sens : c'est un gradient de richesse, et la coordonnée sur cet axe est votre indice. Questions : quelle part d'inertie porte cet axe ? Quelle est sa corrélation avec l'indice officiel \texttt{hv271} (construit par une méthode voisine) ? Vos quintiles concordent-ils avec \texttt{hv270} (tableau croisé) ? Puis typologie des conditions de vie (CAH et $k$-means) et part pondérée de ménages pauvres par classe.
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe1.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 2 \textendash{} Richesse : indices urbain et rural}
-\textbf{Fichier, population} : \texttt{HR}, ménages urbains ($3\,150$) et ruraux ($8\,482$), traités séparément.\\
-\textbf{Cible} : comme le groupe 1 (\texttt{hv270} $\in\{1,2\}$).\\
-\textbf{Explicatives suggérées} : celles du groupe 1 ; comparer un modèle unique avec \texttt{hv025} et deux modèles séparés.\\
-\textbf{À écarter} : comme le groupe 1.\\
-\textbf{Taux de contrôle} : $13{,}9\,\%$ de la population urbaine et $86{,}5\,\%$ de la population rurale appartiennent aux $40\,\%$ les plus pauvres.\\
-\textbf{Non supervisé} : deux ACP, l'une sur les ménages urbains, l'autre sur les ruraux ; comparer les variables qui portent le premier axe dans chaque milieu, puis le classement des ménages avec l'indice national \texttt{hv271}.
-\end{fiche}
+\textbf{Question.} Les signes de la pauvreté sont-ils les mêmes en ville et à la campagne ? Vaut-il mieux un modèle par milieu ou un modèle unique ?
 
+\textbf{Population.} Les ménages du fichier \texttt{HR}, séparés selon \texttt{hv025} : $3\,150$ ménages urbains et $8\,482$ ruraux (effectifs non pondérés : le milieu rural est sur-représenté dans l'échantillon). Poids : \texttt{hv005}/$10^6$.
+
+\textbf{Cible.} Comme le groupe 1 : \texttt{pauvre} $=1$ si \texttt{hv270} $\in\{1,2\}$ (quintiles nationaux).
+
+\textbf{Explicatives suggérées.} Celles du groupe 1, sans le milieu dans les modèles par milieu. On compare trois approches : un modèle urbain, un modèle rural, un modèle unique avec \texttt{hv025} parmi les variables (le code prépare les trois bases).
+
+\textbf{À écarter.} Comme le groupe 1 : biens, logement, \texttt{hv271}.
+
+\textbf{Taux de contrôle.} $13{,}9\,\%$ de la population urbaine et $86{,}5\,\%$ de la population rurale appartiennent aux $40\,\%$ les plus pauvres (poids \texttt{hv005}/$10^6$ $\times$ \texttt{hv012}). Le code affiche aussi la part des ménages. Les classes sont donc très déséquilibrées, en sens inverse dans les deux milieux : l'exactitude seule n'a aucun sens ici.
+
+\textbf{Non supervisé : un indice par milieu.} Mêmes variables actives que le groupe 1, mais une ACP sur les ménages urbains et une autre sur les ruraux. Questions : quelles variables portent le premier axe dans chaque milieu (en ville : réfrigérateur, télévision, voiture ? à la campagne : sol, radio, vélo ?) ; corrélation de chaque premier axe avec \texttt{hv271} ; part des ménages qui changent de quintile quand on calcule les quintiles à l'intérieur du milieu. Typologie dans chaque milieu, part de ménages pauvres par classe. Pour lancer le code non supervisé sur un milieu : \texttt{Z, illus = bases["urbain"]["Z"], bases["urbain"]["illus"]}.
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe2.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 3 \textendash{} Vaccination complète}
-\textbf{Fichier, population} : \texttt{KR}, enfants vivants (\texttt{b5} $=1$) âgés de $12$ à $23$ mois (âge en mois $=$ \texttt{v008} $-$ \texttt{b3}) : $1\,884$ enfants.\\
-\textbf{Cible} : $1$ si \texttt{h2} (BCG), \texttt{h3}, \texttt{h5}, \texttt{h7} (DTC~1 à~3), \texttt{h4}, \texttt{h6}, \texttt{h8} (polio~1 à~3) et \texttt{h9} (rougeole) valent tous $1$, $2$ ou $3$ (vaccin reçu, sur carte ou déclaré).\\
-\textbf{Explicatives suggérées} : sexe \texttt{b4}, rang de naissance \texttt{bord}, âge de la mère \texttt{v012}, instruction \texttt{v106}, quintile \texttt{v190}, milieu \texttt{v025}, région \texttt{v024}, visites prénatales \texttt{m14}, lieu d'accouchement \texttt{m15}, exposition aux médias \texttt{v157} à \texttt{v159}, taille du ménage \texttt{v136}.\\
-\textbf{À écarter} : toutes les variables de vaccination \texttt{h0} à \texttt{h10} et la carte de vaccination \texttt{h1}.\\
-\textbf{Taux de contrôle} : $38{,}1\,\%$.\\
-\textbf{Non supervisé} : typologie (k-means ou CAH) des enfants et de leurs mères sur les variables explicatives, puis taux de vaccination complète par classe.
-\end{fiche}
+\textbf{Question.} Quels enfants de $12$ à $23$ mois risquent de ne pas avoir reçu tous les vaccins de base ? Le but est de mieux cibler les relances.
 
+\textbf{Population.} Le fichier \texttt{KR} contient tous les enfants nés dans les cinq ans avant l'enquête des femmes interrogées. On garde les enfants vivants (\texttt{b5} $=1$) âgés de $12$ à $23$ mois. L'âge en mois se calcule par \texttt{v008} $-$ \texttt{b3} : les deux dates (entretien et naissance) sont en \og mois depuis janvier 1900 \fg{}. Effectif : $1\,884$ enfants. Poids : \texttt{v005}/$10^6$ (celui de la mère).
+
+\textbf{Cible, pas à pas.}
+\begin{enumerate}
+  \item Les huit vaccins de base : BCG \texttt{h2} ; DTC~1, 2, 3 : \texttt{h3}, \texttt{h5}, \texttt{h7} ; polio~1, 2, 3 : \texttt{h4}, \texttt{h6}, \texttt{h8} ; rougeole \texttt{h9}. La polio à la naissance (\texttt{h0}) ne compte pas.
+  \item Codes de chaque vaccin : $0$ non reçu ; $1$ date notée sur la carte ; $2$ déclaré par la mère ; $3$ marqué sur la carte sans date ; $8$ ne sait pas. Un vaccin est \textbf{reçu} si son code vaut $1$, $2$ ou $3$ (carte ou déclaration, comme dans le rapport officiel) ; $8$ compte comme non reçu.
+  \item \texttt{vacc\_complete} $=1$ si les huit vaccins sont reçus, $0$ sinon.
+\end{enumerate}
+
+\textbf{Explicatives suggérées.}
+\begin{itemize}
+  \item enfant : âge en mois, sexe \texttt{b4}, rang de naissance \texttt{bord} ;
+  \item mère : âge \texttt{v012}, instruction \texttt{v106} ($0$ à $3$), religion \texttt{v130}, exposition aux journaux, à la radio, à la télévision \texttt{v157}, \texttt{v158}, \texttt{v159} ($0$ jamais à $3$ presque chaque jour) ;
+  \item soins : visites prénatales \texttt{m14} (posée seulement pour la dernière naissance, $98$ : ne sait pas), accouchement en établissement de santé (\texttt{m15} de $20$ à $49$ : établissement public ou privé ; $11$, $12$ : domicile) ;
+  \item ménage : quintile de richesse \texttt{v190}, taille \texttt{v136}, sexe du chef \texttt{v151}, milieu \texttt{v025}, département \texttt{v024}.
+\end{itemize}
+
+\textbf{À écarter.} Toutes les variables de vaccination \texttt{h0} à \texttt{h10} (elles composent la cible) et la possession d'une carte de vaccination \texttt{h1}, qui n'existe que parce que l'enfant a été vacciné.
+
+\textbf{Taux de contrôle.} $38{,}1\,\%$ des enfants de $12$-$23$ mois (poids \texttt{v005}/$10^6$). Le code affiche aussi la couverture de chaque vaccin : comparez-la au rapport officiel.
+
+\textbf{Non supervisé : profils de mères et de ménages.} Variables actives : âge, instruction et exposition aux médias de la mère, quintile de richesse, milieu urbain, taille du ménage, rang de l'enfant, visites prénatales, accouchement en établissement. Le premier axe de l'ACP oppose probablement les mères instruites, aisées, urbaines, suivies pendant la grossesse aux autres : c'est un axe d'accès aux services. Questions : les enfants non complètement vaccinés se concentrent-ils d'un côté de cet axe ? Quelles classes de la typologie ont le taux de vaccination complète le plus bas, et comment les décrire ? Ce sont les profils à cibler.
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe3.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 4 \textendash{} Abandon entre DTC1 et DTC3}
-\textbf{Fichier, population} : \texttt{KR}, enfants vivants de $12$ à $23$ mois ayant reçu le DTC1 (\texttt{h3} $\in\{1,2,3\}$) : $1\,290$ enfants.\\
-\textbf{Cible} : $1$ si le DTC3 n'a pas été reçu (\texttt{h7} $\notin\{1,2,3\}$).\\
-\textbf{Explicatives suggérées} : celles du groupe 3.\\
-\textbf{À écarter} : comme le groupe 3.\\
-\textbf{Taux de contrôle} : $25{,}0\,\%$ d'abandon (DTC1 : $74{,}5\,\%$ ; DTC3 : $56{,}3\,\%$ des $12$--$23$ mois).\\
-\textbf{Non supervisé} : typologie des enfants ayant commencé le calendrier vaccinal ; taux d'abandon par classe.
-\end{fiche}
+\textbf{Question.} Parmi les enfants qui ont commencé le calendrier vaccinal, lesquels ne l'achèvent pas ? L'abandon mesure la capacité du système de santé à faire revenir les familles.
 
+\textbf{Population.} Enfants vivants de $12$ à $23$ mois du fichier \texttt{KR} (comme le groupe 3) \textbf{ayant reçu le DTC1} (\texttt{h3} $\in\{1,2,3\}$) : $1\,290$ enfants. Poids : \texttt{v005}/$10^6$.
+
+\textbf{Cible, pas à pas.} DTC1 reçu si \texttt{h3} $\in\{1,2,3\}$ ; DTC3 reçu si \texttt{h7} $\in\{1,2,3\}$ (mêmes codes que le groupe 3). \texttt{abandon} $=1$ si le DTC3 n'a pas été reçu, $0$ sinon, parmi les enfants qui ont reçu le DTC1.
+
+\textbf{Explicatives suggérées.} Celles du groupe 3. L'âge en mois compte : un enfant de $12$ mois a pu recevoir son DTC1 en retard et n'être pas encore au bout du calendrier.
+
+\textbf{À écarter.} Toutes les variables \texttt{h0} à \texttt{h10} et \texttt{h1} : les autres doses (polio~3, rougeole) se donnent souvent lors des mêmes visites que le DTC3 et annonceraient la réponse.
+
+\textbf{Taux de contrôle.} $25{,}0\,\%$ d'abandon (poids \texttt{v005}/$10^6$) ; parmi tous les $12$-$23$ mois, DTC1 : $74{,}5\,\%$, DTC3 : $56{,}3\,\%$.
+
+\textbf{Non supervisé : profils des familles qui ont commencé.} Mêmes variables actives que le groupe 3, sur les seuls enfants ayant reçu le DTC1. Questions : quelles classes abandonnent le plus ? L'abandon suit-il le même axe socio-économique que l'absence de vaccination (groupe 3), ou d'autres facteurs (taille du ménage, rang de l'enfant, âge de la mère) ?
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe4.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 5 \textendash{} Vaccination contre la rougeole}
-\textbf{Fichier, population} : \texttt{KR}, enfants vivants de $12$ à $23$ mois : $1\,884$ enfants.\\
-\textbf{Cible} : $1$ si \texttt{h9} $\in\{1,2,3\}$.\\
-\textbf{Explicatives suggérées} : celles du groupe 3 ; l'âge exact de l'enfant en mois compte ici (vaccin administré vers $9$ mois).\\
-\textbf{À écarter} : comme le groupe 3 (les autres vaccins sont très liés à la cible).\\
-\textbf{Taux de contrôle} : $74{,}9\,\%$.\\
-\textbf{Non supervisé} : ACP des caractéristiques de la mère et du ménage ; positionner les enfants non vaccinés sur le premier plan factoriel.
-\end{fiche}
+\textbf{Question.} Quels enfants de $12$ à $23$ mois n'ont pas reçu le vaccin contre la rougeole, maladie qui provoque encore des épidémies ?
 
+\textbf{Population.} Enfants vivants de $12$ à $23$ mois du fichier \texttt{KR} : $1\,884$ enfants. Poids : \texttt{v005}/$10^6$.
+
+\textbf{Cible.} \texttt{rougeole} $=1$ si \texttt{h9} $\in\{1,2,3\}$ (date sur la carte, déclaration de la mère, marque sur la carte) ; $0$ si \texttt{h9} vaut $0$ (non) ou $8$ (ne sait pas).
+
+\textbf{Explicatives suggérées.} Celles du groupe 3. L'âge en mois compte particulièrement : le vaccin se donne à $9$ mois, les enfants de $12$ mois ont pu le recevoir en retard.
+
+\textbf{À écarter.} Les autres vaccins (\texttt{h0} à \texttt{h8}, \texttt{h10}) et la carte \texttt{h1} : un enfant qui a reçu le DTC3 a presque toujours reçu la rougeole, ce serait une fuite.
+
+\textbf{Taux de contrôle.} $74{,}9\,\%$ (poids \texttt{v005}/$10^6$).
+
+\textbf{Non supervisé : où sont les non-vaccinés ?} Mêmes variables actives que le groupe 3. On insiste ici sur l'ACP : projeter les enfants sur le premier plan factoriel, colorés selon la cible ; lire les axes grâce aux corrélations ; dire si les non-vaccinés occupent une zone particulière du plan. Puis typologie et taux de vaccination par classe.
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe5.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 6 \textendash{} Retard de croissance}
-\textbf{Fichier, population} : \texttt{KR}, enfants vivants mesurés, \texttt{hw70} $<9996$ : $4\,475$ enfants.\\
-\textbf{Cible} : $1$ si \texttt{hw70} $<-200$ (score taille-pour-âge inférieur à $-2$ écarts-types).\\
-\textbf{Explicatives suggérées} : âge en mois \texttt{hw1}, sexe \texttt{b4}, rang \texttt{bord}, intervalle avec la naissance précédente \texttt{b11}, taille à la naissance perçue \texttt{m18}, taille et IMC de la mère \texttt{v438}, \texttt{v445} (codes spéciaux à exclure), instruction \texttt{v106}, quintile \texttt{v190}, milieu \texttt{v025}, région \texttt{v024}, diarrhée récente \texttt{h11}, eau \texttt{v113}, toilettes \texttt{v116}.\\
-\textbf{À écarter} : les autres indices anthropométriques \texttt{hw71}, \texttt{hw72}, et le poids et la taille de l'enfant \texttt{hw2}, \texttt{hw3} (ils servent à calculer la cible).\\
-\textbf{Taux de contrôle} : $23{,}1\,\%$.\\
-\textbf{Non supervisé} : ACP des caractéristiques de l'enfant, de la mère et du ménage ; lecture du premier plan et position des enfants en retard de croissance.
-\end{fiche}
+\textbf{Question.} Quels enfants de moins de $5$ ans souffrent d'un retard de croissance, signe d'une malnutrition chronique ?
 
+\textbf{Population.} L'anthropométrie n'a été mesurée que dans la moitié des ménages. On garde les enfants vivants (\texttt{b5} $=1$) du fichier \texttt{KR} qui ont un score valide : \texttt{hw70} $<9996$ (les codes $9996$ à $9999$ signalent une mesure hors limites, incohérente ou absente). Effectif : $4\,475$ enfants. Poids : \texttt{v005}/$10^6$.
+
+\textbf{Cible.} \texttt{hw70} est le score $z$ taille-pour-âge multiplié par $100$ (normes de croissance de l'OMS) : $-250$ signifie que l'enfant est $2{,}5$ écarts types sous la taille médiane des enfants de son âge et de son sexe. \texttt{retard} $=1$ si \texttt{hw70} $<-200$, $0$ sinon.
+
+\textbf{Explicatives suggérées.}
+\begin{itemize}
+  \item enfant : âge en mois \texttt{hw1} (le retard augmente avec l'âge), sexe \texttt{b4}, rang \texttt{bord}, intervalle avec la naissance précédente \texttt{b11} (vide pour un premier-né, d'où l'indicatrice \texttt{premier\_ne}), jumeau (\texttt{b0} $>0$), taille à la naissance perçue par la mère \texttt{m18} ($1$ très gros à $5$ très petit ; $8$ : ne sait pas), diarrhée récente (\texttt{h11} $\in\{1,2\}$) ;
+  \item mère : âge \texttt{v012}, instruction \texttt{v106}, taille \texttt{v438} (en millimètres, divisée par $10$ ; codes $\ge9990$ : manquant), IMC \texttt{v445} (divisé par $100$ ; codes $\ge9990$ : manquant) ;
+  \item ménage : quintile \texttt{v190}, taille \texttt{v136}, eau améliorée (\texttt{v113}), toilettes améliorées (\texttt{v116}), milieu \texttt{v025}, département \texttt{v024}.
+\end{itemize}
+
+\textbf{À écarter.} Les autres indices anthropométriques \texttt{hw71}, \texttt{hw72} et les mesures brutes de l'enfant (poids \texttt{hw2}, taille \texttt{hw3}) : ils servent à calculer la cible ou en sont très proches.
+
+\textbf{Taux de contrôle.} $23{,}1\,\%$ (poids \texttt{v005}/$10^6$, fichier \texttt{KR}). Le rapport officiel calcule ce taux sur les enfants présents la nuit précédente du fichier des membres (\texttt{PR}, poids \texttt{hv005}) : un écart d'un ou deux points avec lui est normal.
+
+\textbf{Non supervisé : profils enfant--mère--ménage.} Variables actives : âge de l'enfant, rang, taille à la naissance, taille et IMC de la mère, instruction, quintile, milieu, taille du ménage, eau et toilettes. Questions : quels axes se dégagent (niveau de vie, corpulence de la mère, âge de l'enfant) ? Où se placent les enfants en retard de croissance sur le premier plan ? Quelles classes ont le taux de retard le plus élevé ?
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe6.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 7 \textendash{} Insuffisance pondérale}
-\textbf{Fichier, population} : \texttt{KR}, enfants vivants mesurés, \texttt{hw71} $<9996$ : $4\,475$ enfants.\\
-\textbf{Cible} : $1$ si \texttt{hw71} $<-200$ (score poids-pour-âge inférieur à $-2$ écarts-types).\\
-\textbf{Explicatives suggérées} : celles du groupe 6.\\
-\textbf{À écarter} : \texttt{hw70}, \texttt{hw72}, \texttt{hw2}, \texttt{hw3}.\\
-\textbf{Taux de contrôle} : $11{,}1\,\%$.\\
-\textbf{Non supervisé} : typologie (k-means ou CAH) des couples mère--enfant ; taux d'insuffisance pondérale par classe.
-\end{fiche}
+\textbf{Question.} Quels enfants de moins de $5$ ans ont un poids trop faible pour leur âge ?
 
+\textbf{Population.} Enfants vivants du fichier \texttt{KR} avec un score valide \texttt{hw71} $<9996$ : $4\,475$ enfants. Poids : \texttt{v005}/$10^6$.
+
+\textbf{Cible.} \texttt{hw71} est le score $z$ poids-pour-âge multiplié par $100$. \texttt{insuff\_pond} $=1$ si \texttt{hw71} $<-200$, $0$ sinon.
+
+\textbf{Explicatives suggérées.} Celles du groupe 6 (même code, même codage).
+
+\textbf{À écarter.} \texttt{hw70}, \texttt{hw72}, poids \texttt{hw2} et taille \texttt{hw3} de l'enfant.
+
+\textbf{Taux de contrôle.} $11{,}1\,\%$ (poids \texttt{v005}/$10^6$, fichier \texttt{KR} ; même remarque que le groupe 6 sur le rapport officiel).
+
+\textbf{Non supervisé : typologie des couples mère--enfant.} Mêmes variables actives que le groupe 6. On insiste ici sur la typologie : choix du nombre de classes sur le dendrogramme, consolidation par $k$-means, description et nom de chaque classe, taux pondéré d'insuffisance pondérale par classe.
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe7.py}
+
+% ---------------------------------------------------------------------
 \begin{fiche}{Groupe 8 \textendash{} Contraception moderne}
-\textbf{Fichier, population} : \texttt{IR}, femmes actuellement en union (\texttt{v502} $=1$) : $6\,750$ femmes.\\
-\textbf{Cible} : $1$ si \texttt{v313} $=3$ (méthode moderne).\\
-\textbf{Explicatives suggérées} : âge \texttt{v012}, instruction \texttt{v106}, quintile \texttt{v190}, milieu \texttt{v025}, région \texttt{v024}, enfants nés vivants \texttt{v201}, enfants vivants \texttt{v218}, religion \texttt{v130}, exposition aux médias \texttt{v157} à \texttt{v159}, travail \texttt{v714}, âge à la première union \texttt{v511}, décision sur sa propre santé \texttt{v743a}.\\
-\textbf{À écarter} : méthode utilisée et utilisation passée ou prévue (\texttt{v312}, \texttt{v361} à \texttt{v364}), besoins non satisfaits \texttt{v626a}.\\
-\textbf{Taux de contrôle} : $20{,}0\,\%$.\\
-\textbf{Non supervisé} : typologie des femmes en union sur les variables explicatives ; taux de contraception moderne par classe.
-\end{fiche}
+\textbf{Question.} Quelles femmes en union utilisent une méthode moderne de contraception ? Le but est de comprendre les freins à l'utilisation.
 
-\begin{fiche}{Groupe 9 \textendash{} Besoins non satisfaits en contraception}
-\textbf{Fichier, population} : \texttt{IR}, femmes actuellement en union : $6\,750$ femmes.\\
-\textbf{Cible} : $1$ si \texttt{v626a} $\in\{1,2\}$ (besoin non satisfait pour espacer ou pour limiter).\\
-\textbf{Explicatives suggérées} : celles du groupe 8.\\
-\textbf{À écarter} : les composantes de l'indicateur, \texttt{v312}, \texttt{v313}, \texttt{v364}, désir d'enfants \texttt{v602}, \texttt{v605}, grossesse actuelle \texttt{v213}, aménorrhée et abstinence \texttt{v405}, \texttt{v406}.\\
-\textbf{Taux de contrôle} : $18{,}4\,\%$.\\
-\textbf{Non supervisé} : ACP des caractéristiques des femmes ; position des femmes ayant un besoin non satisfait sur le premier plan factoriel.
+\textbf{Population.} Femmes du fichier \texttt{IR} actuellement en union (\texttt{v502} $=1$ : mariées ou vivant avec un partenaire) : $6\,750$ femmes. Poids : \texttt{v005}/$10^6$.
+
+\textbf{Cible.} \texttt{v313} donne le type de méthode utilisée actuellement : $0$ aucune, $1$ méthode folklorique, $2$ traditionnelle (retrait, continence périodique), $3$ moderne (pilule, DIU, injection, implant, préservatif, stérilisation\dots). \texttt{moderne} $=1$ si \texttt{v313} $=3$, $0$ sinon.
+
+\textbf{Explicatives suggérées.}
+\begin{itemize}
+  \item femme : âge \texttt{v012}, instruction \texttt{v106}, religion \texttt{v130}, travail actuel \texttt{v714} ($0/1$), âge à la première union \texttt{v511}, exposition aux médias \texttt{v157} à \texttt{v159}, décision sur sa propre santé (\texttt{v743a} $\in\{1,2,3\}$ : seule ou avec son conjoint ou une autre personne) ;
+  \item fécondité : enfants nés vivants \texttt{v201}, enfants vivants \texttt{v218} ;
+  \item couple : type d'union \texttt{v501}, instruction du conjoint \texttt{v701}, polygamie (\texttt{v505} $>0$ autres épouses ; $98$ : ne sait pas) ;
+  \item ménage : quintile \texttt{v190}, taille \texttt{v136}, milieu \texttt{v025}, département \texttt{v024}.
+\end{itemize}
+
+\textbf{À écarter.} La méthode utilisée \texttt{v312}, l'usage passé et les intentions (\texttt{v361} à \texttt{v364}), les besoins non satisfaits \texttt{v626a}, et le désir d'enfants \texttt{v602}, \texttt{v605}, qui ont une modalité \og stérilisée \fg{} : elle annonce une méthode moderne.
+
+\textbf{Taux de contrôle.} $20{,}0\,\%$ des femmes en union (poids \texttt{v005}/$10^6$).
+
+\textbf{Non supervisé : typologie des femmes en union.} Variables actives : âge, instruction, quintile, milieu urbain, enfants nés vivants et vivants, âge à la première union, médias, travail, instruction du conjoint, polygamie, décision sur sa santé. Questions : quels profils de femmes se dégagent (jeunes urbaines instruites, femmes rurales à forte fécondité, unions polygames\dots) ? Quel est le taux de contraception moderne de chaque classe ?
 \end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe8.py}
+
+% ---------------------------------------------------------------------
+\begin{fiche}{Groupe 9 \textendash{} Besoins non satisfaits en contraception}
+\textbf{Question.} Quelles femmes en union voudraient éviter ou espacer une grossesse sans utiliser de contraception ? Ce sont les femmes que les programmes de planification familiale cherchent à atteindre.
+
+\textbf{Population.} Femmes du fichier \texttt{IR} actuellement en union (\texttt{v502} $=1$) : $6\,750$ femmes. Poids : \texttt{v005}/$10^6$.
+
+\textbf{Cible.} \texttt{v626a} est l'indicateur calculé par DHS (définition révisée) : $1$ besoin non satisfait pour espacer, $2$ pour limiter, $3$ et $4$ utilise une méthode pour espacer ou limiter, $7$ pas de besoin, $9$ stérile ou ménopausée (codes à vérifier dans le \texttt{.MAP}). \texttt{besoin\_ns} $=1$ si \texttt{v626a} $\in\{1,2\}$, $0$ pour toutes les autres femmes en union, y compris les stériles.
+
+\textbf{Explicatives suggérées.} Celles du groupe 8.
+
+\textbf{À écarter.} Tout ce qui sert à construire l'indicateur : méthode et type de méthode (\texttt{v312}, \texttt{v313}), usage et intentions (\texttt{v361} à \texttt{v364}), désir d'enfants (\texttt{v602}, \texttt{v605}), grossesse actuelle et désir de cette grossesse (\texttt{v213}, \texttt{v225}), aménorrhée et abstinence post-partum (\texttt{v405}, \texttt{v406}).
+
+\textbf{Taux de contrôle.} $18{,}4\,\%$ des femmes en union (poids \texttt{v005}/$10^6$).
+
+\textbf{Non supervisé : où sont les besoins non satisfaits ?} Mêmes variables actives que le groupe 8. On insiste sur l'ACP : nommer les deux premiers axes, projeter les femmes colorées selon la cible, puis typologie et taux de besoins non satisfaits par classe. Comparer avec le groupe 8 n'est pas demandé, mais la discussion peut citer les profils où la contraception est faible \emph{et} le besoin élevé.
+\end{fiche}
+\lstinputlisting[style=cnfpython,basicstyle=\ttfamily\footnotesize]{code_projet/groupe9.py}
 
 \section{Accès aux données pour le cours : l'autorisation de classe}
+\label{sec:acces}
 
 \begin{aretenir}
 Pour ce cours, l'enseignant demande au programme DHS une \textbf{autorisation pour toute la classe}. Les étudiants n'ont pas de compte à créer : les fichiers leur sont remis par l'enseignant, pour le seul projet du cours, dans les conditions fixées par l'accord écrit de DHS. Ce qui est rendu, c'est le code et le rapport, jamais les données.
@@ -195,7 +505,8 @@ Elle est décrite ici pour qu'un futur enseignant, ou un étudiant devenu enseig
   \item \textbf{Repérer l'option « Instructors »} : sur la page de création d'un projet, DHS indique que les enseignants peuvent faire autoriser leur classe sans inscription individuelle des étudiants, sur demande par courriel.
   \item \textbf{Écrire à} \texttt{archive@dhsprogram.com} depuis l'adresse du compte, en précisant : l'établissement et le cours ; l'effectif (avec la liste nominative des étudiants si DHS la demande) ; l'enquête et les fichiers (Congo DHS 2011-12, fichiers ménages \texttt{HR}, femmes \texttt{IR}, enfants \texttt{KR}, format Stata ou SPSS) ; l'usage (projets de groupe encadrés) ; les dates (octobre à décembre 2026) ; les règles imposées aux étudiants.
   \item \textbf{Attendre la réponse} de DHS, qui fixe les conditions de l'autorisation, puis télécharger les fichiers depuis le compte de l'enseignant.
-  \item \textbf{Remettre les fichiers} aux seuls étudiants inscrits, par un canal privé (clé USB en salle ou dossier partagé restreint à la classe), après signature de la charte ci-dessous. Jamais de dépôt public.
+  \item \textbf{Remettre les fichiers} aux seuls étudiants de la liste transmise à DHS, par un canal privé : courriel en copie cachée aux seules adresses autorisées, clé USB en salle, ou dossier partagé restreint à la classe. Jamais de dépôt public. Chaque étudiant reçoit les conditions d'utilisation de DHS (\url{https://dhsprogram.com/data/terms-of-use.cfm}) et signe la charte ci-dessous, de préférence avant la remise des fichiers.
+  \item \textbf{Déclarer tout nouvel étudiant} à DHS (nom et adresse électronique) \emph{avant} de lui remettre les fichiers.
   \item \textbf{Clore} : à la fin du cours, rappeler aux étudiants de supprimer leurs copies, sauf autre disposition de l'accord DHS.
 \end{enumerate}
 
@@ -246,31 +557,5 @@ Repartir de la page \url{https://dhsprogram.com/data/dataset_admin/login_main.cf
 I am [a master student / a statistician] at [full name of the institution], [city, country]. I will use the [survey, for example Congo DHS 2011-12] [files, for example household, women and children recode files] to study [research question]. Methods: [for example logistic regression, random forests, principal component analysis]. The results will be presented in [a thesis / a report / an article]. The data will be kept on my own computer and will not be shared or published.
 \end{modele}
 
-\section{Après réception des fichiers : premiers pas}
-
-Ranger les fichiers dans un dossier \texttt{donnees/}. Le fichier \texttt{.gitignore} du projet doit contenir au moins les lignes suivantes, pour que les données ne partent jamais sur GitHub :
-\begin{terminal}
-donnees/
-*.DTA
-*.dta
-*.SAV
-*.sav
-\end{terminal}
-
-On ne lit que les variables utiles, en gardant les codes, comme au TP5 :
-\begin{python}
-import numpy as np, pandas as pd
-fichier = "donnees/CGKR61FL.DTA"                     # fichier enfants (KR), à adapter
-with pd.io.stata.StataReader(fichier) as lecteur:
-    etiquettes = lecteur.value_labels()              # codes -> libellés
-    libelles = lecteur.variable_labels()             # nom long de chaque variable
-colonnes = ["v005", "v024", "v025", "v106", "v190", "b4", "bord", "h2", "h3", "h9"]
-df = pd.read_stata(fichier, columns=colonnes, convert_categoricals=False)
-df["poids"] = df["v005"] / 1e6                       # poids de sondage
-\end{python}
-
-\begin{remarque}[Avant de modéliser]
-Lire le dictionnaire de l'enquête ; repérer les codes spéciaux (\emph{ne sait pas}, \emph{manquant}) ; vérifier les effectifs et les taux connus du rapport officiel de l'enquête ; puis seulement découper en apprentissage et test (chapitre~5).
-\end{remarque}
 
 \end{document}

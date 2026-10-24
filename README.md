@@ -18,7 +18,8 @@ Ce dépôt rassemble tous les supports du cours : diapositives, polycopié des o
 | Chapitre 3 · Classification et méthodes d'ensemble | mardi 20 octobre 2026 | 3 h |
 | Chapitre 4 · Apprentissage non supervisé | jeudi 22 octobre 2026 | 3 h |
 | Chapitre 5 · Projet de bout en bout, interprétabilité et éthique | samedi 24 octobre 2026 | 3 h |
-| Remise des rapports et soutenances du projet | fin novembre 2026 | — |
+| Remise du rapport et du notebook du projet | dimanche 22 novembre 2026 | — |
+| Soutenances du projet | samedi 28 novembre 2026 | 15 min par groupe |
 
 ## Supports
 
@@ -30,7 +31,8 @@ Ce dépôt rassemble tous les supports du cours : diapositives, polycopié des o
 | 3 · Classification et méthodes d'ensemble | [PDF](cours/chapitre3/chapitre3.pdf) | [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP3.ipynb) |
 | 4 · Apprentissage non supervisé | [PDF](cours/chapitre4/chapitre4.pdf) | [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP4.ipynb) |
 | 5 · Projet de bout en bout, interprétabilité et éthique | [PDF](cours/chapitre5/chapitre5.pdf) | [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/TP5.ipynb) |
-| Projet de groupe | [Guide du projet (PDF)](projet/guide_projet.pdf) | — |
+| Projet de groupe | [Guide du projet (PDF)](projet/guide_projet.pdf) | [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/Projets_demarrage.ipynb) codes de démarrage des 9 groupes |
+| Validation croisée : hyperparamètres de tous les modèles du cours | — | [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdimbamba/ml-cnfsdp/blob/main/notebooks/Validation_croisee.ipynb) |
 
 Les corrigés des TP sont dans [`notebooks/corriges/`](notebooks/corriges/).
 
@@ -58,9 +60,9 @@ Pour récupérer les nouveaux supports au fil du semestre : `git pull` depuis le
 ml-cnfsdp/
 ├── cours/chapitre1 … chapitre5   diapositives : PDF, sources LaTeX, figures, thème CNFSDP
 ├── poly/chapitre0                polycopié des outils mathématiques (PDF et sources)
-├── notebooks/                    TP0 à TP5, versions à compléter
+├── notebooks/                    TP0 à TP5 (à compléter), validation croisée, démarrage du projet
 │   └── corriges/                 corrigés exécutés des TP
-├── projet/                       guide du projet de groupe, modèle de demande DHS
+├── projet/                       guide du projet, codes de préparation (code_projet/), modèle de demande DHS
 ├── code/                         scripts des figures et des notebooks
 ├── docs/                         site du cours (GitHub Pages)
 ├── environment.yml               environnement conda du cours
@@ -71,17 +73,17 @@ ml-cnfsdp/
 
 | Épreuve | Poids |
 |---|---|
-| Examen sur table (3 h, sans document) | 40 % |
-| Projet de groupe : rapport de 10 pages et notebook | 40 % |
+| Projet de groupe : rapport de 10 pages et notebook | 60 % |
 | Projet de groupe : soutenance de 15 minutes | 20 % |
+| Note individuelle de participation (interventions pendant les cours et les TP) | 20 % |
 
-Les TP ne sont pas notés : ils se font en salle et se terminent chez soi si besoin.
+Il n'y a pas d'examen écrit. Les TP ne sont pas notés en tant que tels : ils se font en salle et se terminent chez soi si besoin ; les interventions pendant les TP comptent dans la participation.
 
 ## Projet et données d'enquête
 
-Le projet porte sur l'**Enquête démographique et de santé du Congo 2011-2012** (programme DHS) : 9 groupes de 4 étudiants, une variante par groupe. Tout est décrit dans le [guide du projet](projet/guide_projet.pdf).
+Le projet porte sur l'**Enquête démographique et de santé du Congo 2011-2012** (programme DHS) : 9 groupes de 4 étudiants constitués par l'enseignant, un thème par groupe. Tout est décrit dans le [guide du projet](projet/guide_projet.pdf).
 
-> **Les données DHS ne sont jamais déposées sur ce dépôt ni sur aucun site public.** Elles sont remises par l'enseignant dans le cadre d'une autorisation de classe, après signature de la charte d'utilisation. Le fichier `.gitignore` exclut le dossier `donnees/` et les fichiers Stata et SPSS : gardez-le dans vos propres dépôts. On rend le code et le rapport, jamais les données.
+> **Les données DHS ne sont jamais déposées sur ce dépôt ni sur aucun site public.** Elles sont remises par l'enseignant, dans le cadre d'une autorisation de classe, aux seuls étudiants déclarés à DHS, qui signent la charte d'utilisation. Le fichier `.gitignore` exclut le dossier `donnees/` et les fichiers Stata et SPSS : gardez-le dans vos propres dépôts. On rend le code et le rapport, jamais les données.
 
 Les TP n'utilisent que des données fournies avec scikit-learn ou simulées dans le notebook : aucun téléchargement ni inscription n'est nécessaire.
 
